@@ -30,8 +30,27 @@ namespace Di.Kdd.TextPrediction
 
 		public PredictionEngine ()
 		{
-			this.trie.LoadWordsFromFile(WordsFileName);
 			this.currentSubTrie = this.trie;
+		}
+
+		public virtual void Init()
+		{
+			var reader = File.OpenText(WordsFileName);
+
+			var word = "";
+
+			while ((word = reader.ReadLine()) != null)
+			{
+				if (this.knowledge.ContainsKey(word))
+				{
+					continue;
+				}
+
+				this.knowledge.Add(word, new Statistics());
+				this.trie.Add(word);
+			}
+
+			reader.Close();
 		}
 
 		public virtual Dictionary<char, float> GetSortedPredictions()
@@ -135,6 +154,9 @@ namespace Di.Kdd.TextPrediction
 		{
 			if (File.Exists(fileName) == false)
 			{
+				this.Init();
+				this.GetTrained();
+
 				return;
 			}
 

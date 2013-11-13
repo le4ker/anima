@@ -212,7 +212,7 @@ in
 under
 different
 place
-u.s
+us
 went
 yes
 water
@@ -666,7 +666,7 @@ rest
 recently
 blood
 workers
-p.m
+pm
 gets
 effect
 economy
