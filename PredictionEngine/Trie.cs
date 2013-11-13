@@ -14,7 +14,7 @@ namespace Di.Kdd.PredictionEngine
 		{
 			this.subTries = new Dictionary<char, Trie>();
 
-			for (char letter = 'a'; letter <= 'z'; letter++)
+			foreach (var letter in PredictionEngine.latinLetters)
 			{
 				this.subTries.Add(letter, null);
 			}
@@ -36,7 +36,7 @@ namespace Di.Kdd.PredictionEngine
 		{
 			StreamReader reader = File.OpenText(fileName);
 
-			string word;
+			var word = "";
 
 			while ((word = reader.ReadLine()) != null)
 			{
@@ -81,8 +81,8 @@ namespace Di.Kdd.PredictionEngine
 
 			word = word.ToLower();
 
-			char firstChar = word[0];
-			string postfix = word.Substring(1);
+			var firstChar = word[0];
+			var postfix = word.Substring(1);
 
 			this.subTries[firstChar].WasTyped(postfix, times);
 		}
@@ -108,7 +108,7 @@ namespace Di.Kdd.PredictionEngine
 				return true;
 			}
 
-			char firstLetter = word[0];
+			var firstLetter = word[0];
 
 			if (this.subTries[firstLetter] == null)
 			{
@@ -116,7 +116,7 @@ namespace Di.Kdd.PredictionEngine
 			}
 			else
 			{
-				string postfix = word.Substring(1);
+				var postfix = word.Substring(1);
 				return this.subTries[firstLetter].Search(postfix);
 			}
 		}
@@ -141,8 +141,8 @@ namespace Di.Kdd.PredictionEngine
 				return;
 			}
 
-			char firstLetter = word[0];
-			string postfix = word.Substring(1);
+			var firstLetter = word[0];
+			var postfix = word.Substring(1);
 
 			if (this.subTries[firstLetter] == null)
 			{

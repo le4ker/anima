@@ -20,11 +20,11 @@ namespace Di.Kdd.PredictionEngine
 		private bool unknownWord = false;
 
 		public static char [] latinLetters = {
-										'a', 'b', 'c', 'd', 'e', 'f', 'g',
-										'h', 'i', 'j', 'k', 'l', 'm', 'n',
-										'o', 'p', 'q', 'r', 's', 't', 'u', 
-										'v', 'w', 'x', 'y', 'z'
-									};
+												'a', 'b', 'c', 'd', 'e', 'f', 'g',
+												'h', 'i', 'j', 'k', 'l', 'm', 'n',
+												'o', 'p', 'q', 'r', 's', 't', 'u', 
+												'v', 'w', 'x', 'y', 'z'
+											};
 
 		public static char [] wordSeparators = { ' ', '.', ',', '!' };
 
@@ -43,8 +43,10 @@ namespace Di.Kdd.PredictionEngine
 
 		public Dictionary<char, float> GetPredictions()
 		{
-			int popularity, postfixesCounter;
-			float evaluation, evaluationSum = 0.0F;
+			var popularity = 0;
+			var postfixesCounter = 0;
+			var evaluation = 0.0F;
+			var evaluationSum = 0.0F;
 
 			if (this.currentSubTrie == null)
 			{
@@ -119,7 +121,7 @@ namespace Di.Kdd.PredictionEngine
 				File.Delete(fileName);
 			}
 
-			StreamWriter writer = new StreamWriter(File.OpenWrite(fileName));
+			var writer = new StreamWriter(File.OpenWrite(fileName));
 
 			foreach (KeyValuePair<string, Statistics> data in this.knowledge)
 			{
@@ -136,21 +138,21 @@ namespace Di.Kdd.PredictionEngine
 				return;
 			}
 
-			StreamReader reader = File.OpenText(fileName);
+			var reader = File.OpenText(fileName);
 
-			string line;
+			var line = "";
 			while((line = reader.ReadLine()) != null)
 			{
-				StringReader stringReader = new StringReader(line);
-				int keyLength = line.IndexOf('±');
-				char [] keyArray = new char[keyLength];
+				var stringReader = new StringReader(line);
+				var keyLength = line.IndexOf('±');
+				var keyArray = new char[keyLength];
 
 				stringReader.ReadBlock(keyArray, 0, keyLength);
-				string key = new string(keyArray);
+				var key = new string(keyArray);
 
 				stringReader.Read();
 
-				Statistics statistics = new Statistics(stringReader.ReadToEnd());
+				var statistics = new Statistics(stringReader.ReadToEnd());
 
 				knowledge.Add(key, statistics);
 			}
@@ -212,7 +214,7 @@ namespace Di.Kdd.PredictionEngine
 
 		private float Evaluate(int popularity, int prefixesCounter)
 		{
-			float usageRatio = this.personalizationFactor * this.wordsTyped / this.trie.Size();
+			var usageRatio = this.personalizationFactor * this.wordsTyped / this.trie.Size();
 
 			if (usageRatio > 1)
 			{
@@ -224,7 +226,7 @@ namespace Di.Kdd.PredictionEngine
 
 		private void AddCurrentWordToWordsFile()
 		{
-			StreamWriter writer = File.AppendText(WordsFileName);
+			var writer = File.AppendText(WordsFileName);
 			writer.WriteLine(this.currentWord);
 			writer.Close();
 		}

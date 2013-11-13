@@ -8,7 +8,6 @@ namespace Di.Kdd.PredictionEngine
 
 		public Statistics()
 		{
-
 		}
 
 		public Statistics(string usageCounter)
