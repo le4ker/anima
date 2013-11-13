@@ -11,13 +11,13 @@ namespace Di.Kdd.WriteRightSimulator
 
 		public WriteRightStatistics ()
 		{
-			base.usageCounter = 1;
+			this.usageCounter = 1;
 			this.timestamp = DateTime.Now.Ticks;
 		}
 
 		public WriteRightStatistics (int usage)
 		{
-			base.usageCounter = usage;
+			this.usageCounter = usage;
 			this.timestamp = DateTime.Now.Ticks;
 		}
 

@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WriteRightSimulator/WriteRightPredictionEngine.cs">
+    <Files>
+      <File FileName="WriteRightSimulator/WriteRightPredictionEngine.cs" Line="15" Column="1" />
+      <File FileName="WriteRightSimulator/WriteRightStatistics.cs" Line="15" Column="40" />
+      <File FileName="PredictionEngine/Statistics.cs" Line="5" Column="25" />
+      <File FileName="PredictionEngine/PredictionEngine.cs" Line="18" Column="30" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
