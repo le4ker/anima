@@ -5,15 +5,18 @@ namespace Di.Kdd.PredictionEngine
 {
 	class Shell
 	{
-		private const char ShellExit = '0';
+		private const char ShellExit = '±';
 		private const string PredictionEngineInstance = "prediction_engine_instance.txt";
 
 		public static void Main (string[] args)
 		{
-			var letter = '\0';
 			var engine = new PredictionEngine();
-			var predictions = new Dictionary<char, float>();
+			engine.Load(PredictionEngineInstance);
+
 			var input = "";
+			var letter = '\0';
+
+			var predictions = new Dictionary<char, float>();
 
 			do
 			{
