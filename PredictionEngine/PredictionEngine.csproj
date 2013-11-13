@@ -43,7 +43,4 @@
     <Compile Include="PredictionEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="words.txt" />
-  </ItemGroup>
 </Project>
