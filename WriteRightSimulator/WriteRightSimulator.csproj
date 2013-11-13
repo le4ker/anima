@@ -37,13 +37,14 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="WriteRightSimulator.cs" />
+    <Compile Include="WriteRightStatistics.cs" />
+    <Compile Include="WriteRightPredictionEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\PredictionEngine\PredictionEngine.csproj">
+    <ProjectReference Include="..\PredictionEngine\TextPrediction.csproj">
       <Project>{9822701C-BA94-4C96-847A-93729E5AD00F}</Project>
-      <Name>PredictionEngine</Name>
+      <Name>TextPrediction</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

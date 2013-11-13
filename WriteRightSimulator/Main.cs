@@ -2,7 +2,7 @@ using System;
 
 namespace Di.Kdd.WriteRightSimulator
 {
-	class MainClass
+	class Shell
 	{
 		public static void Main (string[] args)
 		{

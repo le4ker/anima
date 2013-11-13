@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
 	class Shell
 	{
@@ -28,7 +28,7 @@ namespace Di.Kdd.PredictionEngine
 					break;
 				}
 
-				if (PredictionEngine.ValidLetter(letter) == false)
+				if (engine.ValidLetter(letter) == false)
 				{
 					continue;
 				}

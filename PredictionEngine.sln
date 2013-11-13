@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredictionEngine", "PredictionEngine\PredictionEngine.csproj", "{9822701C-BA94-4C96-847A-93729E5AD00F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextPrediction", "PredictionEngine\TextPrediction.csproj", "{9822701C-BA94-4C96-847A-93729E5AD00F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteRightSimulator", "WriteRightSimulator\WriteRightSimulator.csproj", "{84F9833F-94AA-4A33-9F9D-CBFD2EB51FBC}"
 EndProject
@@ -21,6 +21,6 @@ Global
 		{9822701C-BA94-4C96-847A-93729E5AD00F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = PredictionEngine\PredictionEngine.csproj
+		StartupItem = PredictionEngine\TextPrediction.csproj
 	EndGlobalSection
 EndGlobal

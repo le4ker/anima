@@ -1,33 +1,31 @@
 using System;
 
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
 	public class Statistics
 	{
-		private int usageCounter = 0;
+		protected int usageCounter = 0;
 
-		public Statistics()
-		{
-		}
+		public Statistics() { }
 
 		public Statistics(string usageCounter)
 		{
 			this.usageCounter = Int32.Parse(usageCounter);
 		}
 
-		public void WordTyped()
+		public virtual void WordTyped()
 		{
-			usageCounter++;
+			this.usageCounter++;
 		}
 
 		public int GetPopularity()
 		{
-			return usageCounter;
+			return this.usageCounter;
 		}
 
 		public override string ToString ()
 		{
-			return usageCounter.ToString();
+			return this.usageCounter.ToString();
 		}
 	}
 }

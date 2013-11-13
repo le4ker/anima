@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
 
 	public class PredictionEngine
@@ -34,14 +34,14 @@ namespace Di.Kdd.PredictionEngine
 			this.currentSubTrie = this.trie;
 		}
 
-		public Dictionary<char, float> GetSortedPredictions()
+		public virtual Dictionary<char, float> GetSortedPredictions()
 		{
 			var predictions = this.GetPredictions();
 
 			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
 		}
 
-		public Dictionary<char, float> GetPredictions()
+		public virtual Dictionary<char, float> GetPredictions()
 		{
 			var popularity = 0;
 			var postfixesCounter = 0;
@@ -114,7 +114,7 @@ namespace Di.Kdd.PredictionEngine
 			this.Reset();
 		}
 
-		public void Save(string fileName)
+		public virtual void Save(string fileName)
 		{
 			if (File.Exists(fileName))
 			{
@@ -131,7 +131,7 @@ namespace Di.Kdd.PredictionEngine
 			writer.Close();
 		}
 
-		public void Load(string fileName)
+		public virtual void Load(string fileName)
 		{
 			if (File.Exists(fileName) == false)
 			{
@@ -141,7 +141,7 @@ namespace Di.Kdd.PredictionEngine
 			var reader = File.OpenText(fileName);
 
 			var line = "";
-			while((line = reader.ReadLine()) != null)
+			while ((line = reader.ReadLine()) != null)
 			{
 				var stringReader = new StringReader(line);
 				var keyLength = line.IndexOf('±');
@@ -158,10 +158,11 @@ namespace Di.Kdd.PredictionEngine
 			}
 
 			reader.Close();
+
 			this.GetTrained();
 		}
 
-		public static bool ValidLetter(char letter)
+		public virtual bool ValidLetter(char letter)
 		{
 			letter = Char.ToLower(letter);
 

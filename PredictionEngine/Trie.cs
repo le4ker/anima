@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
 	public class Trie
 	{
