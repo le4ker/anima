@@ -1,6 +1,6 @@
 using System;
 
-namespace WriteRightSimulator
+namespace Di.Kdd.WriteRightSimulator
 {
 	class MainClass
 	{
