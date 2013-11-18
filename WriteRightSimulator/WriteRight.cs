@@ -7,11 +7,31 @@ namespace Di.Kdd.WriteRightSimulator
 	{
 		private int k = 26;
 		private int continuousSuccesses = 0;
-		private const int AggresiveThreshold = 5;
+		private int aggresiveThreshold = 5;
 
 		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
 
-		public void LoadDB(string dbPath)
+		public void SetK (int k)
+		{
+			this.k = k;
+		}
+
+		public void SetAggresiveThreshold (int aggresiveThreshold)
+		{
+			this.aggresiveThreshold = aggresiveThreshold;
+		}
+
+		public void SetTrimThreshold(int trimThreshold)
+		{
+			this.engine.SetThreshold(trimThreshold);
+		}
+
+		public void SetTrimPercentage(float trimPercentage)
+		{
+			this.engine.SetTrimPercentage(trimPercentage);
+		}
+
+		public void LoadDB (string dbPath)
 		{
 			engine.LoadDB(dbPath);
 
@@ -37,7 +57,7 @@ namespace Di.Kdd.WriteRightSimulator
 			this.continuousSuccesses = int.Parse(columns[1]);
 		}
 
-		public void SaveDB(string dbPath)
+		public void SaveDB (string dbPath)
 		{
 			engine.TrimAndSaveDb(dbPath);
 
