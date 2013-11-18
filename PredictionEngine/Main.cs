@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace Di.Kdd.TextPrediction
 {
+	using System;
+	using System.Collections.Generic;
+
 	class Shell
 	{
 		private const char ShellExit = '±';
@@ -11,7 +11,7 @@ namespace Di.Kdd.TextPrediction
 		public static void Main (string[] args)
 		{
 			var engine = new PredictionEngine();
-			engine.Load(PredictionEngineInstance);
+			engine.LoadDB(PredictionEngineInstance);
 
 			var input = "";
 			var letter = '\0';
@@ -28,12 +28,12 @@ namespace Di.Kdd.TextPrediction
 					break;
 				}
 
-				if (engine.ValidLetter(letter) == false)
+				if (engine.ValidCharacter(letter) == false)
 				{
 					continue;
 				}
 
-				engine.LetterTyped(letter);
+				engine.CharTyped(letter);
 
 				input += letter;
 
@@ -56,7 +56,7 @@ namespace Di.Kdd.TextPrediction
 				}
 			} while (true);
 
-			engine.Save(PredictionEngineInstance);
+			engine.SaveDB(PredictionEngineInstance);
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 		public WriteRightStatistics ()
 		{
-			this.usageCounter = 1;
+			this.usageCounter = 0;
 			this.timestamp = DateTime.Now.Ticks;
 		}
 

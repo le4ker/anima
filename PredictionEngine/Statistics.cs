@@ -1,10 +1,10 @@
-using System;
-
 namespace Di.Kdd.TextPrediction
 {
+	using System;
+
 	public class Statistics
 	{
-		protected int usageCounter = 0;
+		protected int usageCounter = 1;
 
 		public Statistics() { }
 
