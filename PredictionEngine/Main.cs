@@ -6,14 +6,14 @@ namespace Di.Kdd.TextPrediction
 	class Shell
 	{
 		private const char ShellExit = '±';
-		private const string PredictionEngineInstance = "prediction_engine_instance.txt";
+		private const string PredictionEngineInstance = "database.txt";
 
 		public static void Main (string[] args)
 		{
-			var engine = new PredictionEngine();
+			var engine = new PredictionEngine<Statistics>();
 			engine.LoadDB(PredictionEngineInstance);
 
-			var input = "";
+			var buffer = "";
 			var letter = '\0';
 
 			var predictions = new Dictionary<char, float>();
@@ -35,12 +35,12 @@ namespace Di.Kdd.TextPrediction
 
 				engine.CharTyped(letter);
 
-				input += letter;
+				buffer += letter;
 
 				Console.Clear();
-				Console.WriteLine(input);
+				Console.WriteLine(buffer);
 
-				predictions = engine.GetSortedPredictions();
+				predictions = engine.GetPredictions();
 
 				if (predictions.Count == 0)
 				{
@@ -54,6 +54,7 @@ namespace Di.Kdd.TextPrediction
 						Console.WriteLine("P(" + prediction.Key + ") = " + prediction.Value);
 					}
 				}
+
 			} while (true);
 
 			engine.SaveDB(PredictionEngineInstance);

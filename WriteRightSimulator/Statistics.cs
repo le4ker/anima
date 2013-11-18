@@ -1,30 +1,33 @@
-
-using Di.Kdd.TextPrediction;
-
-using System;
-
 namespace Di.Kdd.WriteRightSimulator
 {
-	public class WriteRightStatistics : Statistics
+	using Di.Kdd.TextPrediction;
+
+	using System;
+
+	public class Statistics : Di.Kdd.TextPrediction.Statistics
 	{
 		private long timestamp;
 
-		public WriteRightStatistics ()
+		public Statistics ()
 		{
-			this.usageCounter = 0;
 			this.timestamp = DateTime.Now.Ticks;
 		}
 
-		public WriteRightStatistics (int usage)
+		public Statistics (int usage)
 		{
 			this.usageCounter = usage;
 			this.timestamp = DateTime.Now.Ticks;
 		}
 
-		public WriteRightStatistics (int usage, long timestamp)
+		public Statistics (int usage, long timestamp)
 		{
 			this.usageCounter = usage;
 			this.timestamp = timestamp;
+		}
+
+		public long GetTimestamp()
+		{
+			return this.timestamp;
 		}
 
 		public override void WordTyped ()
@@ -33,9 +36,17 @@ namespace Di.Kdd.WriteRightSimulator
 			this.timestamp = DateTime.Now.Ticks;
 		}
 
-		public long GetTimestamp()
+		public override void InitFromString (string text)
 		{
-			return this.timestamp;
+			var columns = text.Split(' ');
+
+			this.usageCounter = int.Parse(columns[1]);
+			this.timestamp = long.Parse(columns[2]);
+		}
+
+		public override string ToString ()
+		{
+			return this.usageCounter.ToString() + " " + this.timestamp.ToString();
 		}
 	}
 }

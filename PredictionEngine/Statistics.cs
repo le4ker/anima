@@ -8,11 +8,10 @@ namespace Di.Kdd.TextPrediction
 
 		public Statistics() { }
 
-		public Statistics(string usageCounter)
+		public virtual void InitFromString(string text)
 		{
-			this.usageCounter = Int32.Parse(usageCounter);
+			this.usageCounter = Int32.Parse(text);
 		}
-
 		public virtual void WordTyped()
 		{
 			this.usageCounter++;

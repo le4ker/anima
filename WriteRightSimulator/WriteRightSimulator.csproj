@@ -39,7 +39,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Statistics.cs" />
-    <Compile Include="PredictionEngine.cs" />
+    <Compile Include="WriteRight.cs" />
+    <Compile Include="TrimmablePredictionEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -5,10 +5,10 @@ namespace Di.Kdd.TextPrediction
 	using System.IO;
 	using System.Linq;
 
-	public class PredictionEngine
+	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
 		private Trie trie = new Trie();
-		private Dictionary<string, Statistics> knowledge = new Dictionary<string, Statistics>();
+		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
 
 		private string currentWord = "";
 		private int wordsTyped = 0;
@@ -29,11 +29,9 @@ namespace Di.Kdd.TextPrediction
 
 		#region Public Methods
 
-		public Dictionary<char, float> GetSortedPredictions()
+		public static void SetWordSeparators(string wordSeparators)
 		{
-			var predictions = this.GetPredictions();
-
-			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
+			Trie.SetWordSeparators(wordSeparators);
 		}
 
 		public Dictionary<char, float> GetPredictions()
@@ -49,7 +47,7 @@ namespace Di.Kdd.TextPrediction
 				return new Dictionary<char, float>();
 			}
 
-			foreach (char possibleNextLetter in Trie.LatinLetters)
+			foreach (var possibleNextLetter in Trie.LatinLetters)
 			{
 				popularity = this.currentSubTrie.GetPopularity(possibleNextLetter);
 				postfixesCounter = this.currentSubTrie.GetSubtrieSize(possibleNextLetter);
@@ -63,14 +61,14 @@ namespace Di.Kdd.TextPrediction
 
 			if (evaluationSum == 0)
 			{
-				foreach (char letter in Trie.LatinLetters)
+				foreach (var letter in Trie.LatinLetters)
 				{
 					predictions.Add(letter, 0.0F);
 				}
 			}
 			else
 			{
-				foreach (char possibleNextLetter in Trie.LatinLetters)
+				foreach (var possibleNextLetter in Trie.LatinLetters)
 				{
 					popularity = this.currentSubTrie.GetPopularity(possibleNextLetter);
 					postfixesCounter = this.currentSubTrie.GetSubtrieSize(possibleNextLetter);
@@ -81,7 +79,7 @@ namespace Di.Kdd.TextPrediction
 				}
 			}
 
-			return predictions;
+			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
 		}
 
 		public void CharTyped(char character)
@@ -109,16 +107,16 @@ namespace Di.Kdd.TextPrediction
 			this.ResetState();
 		}
 
-		public void SaveDB(string fileName)
+		public void SaveDB(string dbPath)
 		{
-			if (File.Exists(fileName))
+			if (File.Exists(dbPath))
 			{
-				File.Delete(fileName);
+				File.Delete(dbPath);
 			}
 
-			var writer = new StreamWriter(File.OpenWrite(fileName));
+			var writer = new StreamWriter(File.OpenWrite(dbPath));
 
-			foreach (KeyValuePair<string, Statistics> data in this.knowledge)
+			foreach (var data in this.knowledge)
 			{
 				writer.WriteLine("{0} {1}", data.Key, data.Value);
 			}
@@ -126,9 +124,9 @@ namespace Di.Kdd.TextPrediction
 			writer.Close();
 		}
 
-		public void LoadDB(string fileName)
+		public void LoadDB(string dbPath)
 		{
-			if (File.Exists(fileName) == false)
+			if (File.Exists(dbPath) == false)
 			{
 				this.Init();
 				this.GetTrained();
@@ -136,24 +134,19 @@ namespace Di.Kdd.TextPrediction
 				return;
 			}
 
-			var reader = File.OpenText(fileName);
+			var reader = File.OpenText(dbPath);
 
 			var line = "";
 
 			while ((line = reader.ReadLine()) != null)
 			{
-				var stringReader = new StringReader(line);
-				var keyLength = line.IndexOf(' ');
-				var keyArray = new char[keyLength];
+				var columns = line.Split(' ');
+				var statisticsString = line.Remove(0, columns[0].Length);
 
-				stringReader.ReadBlock(keyArray, 0, keyLength);
-				var key = new string(keyArray);
+				var statistics = new StatisticsT();
+				statistics.InitFromString(statisticsString);
 
-				stringReader.Read();
-
-				var statistics = new Statistics(stringReader.ReadToEnd());
-
-				knowledge.Add(key, statistics);
+				knowledge.Add(columns[0], statistics);
 			}
 
 			reader.Close();
@@ -183,7 +176,7 @@ namespace Di.Kdd.TextPrediction
 					continue;
 				}
 
-				this.knowledge.Add(word, new Statistics());
+				this.knowledge.Add(word, new StatisticsT());
 				this.trie.Add(word);
 			}
 
@@ -199,7 +192,7 @@ namespace Di.Kdd.TextPrediction
 
 		private void GetTrained()
 		{
-			foreach (KeyValuePair<string, Statistics> data in this.knowledge)
+			foreach (var data in this.knowledge)
 			{
 				this.trie.WasTyped(data.Key, data.Value.GetPopularity());
 				this.wordsTyped += data.Value.GetPopularity();
@@ -210,7 +203,7 @@ namespace Di.Kdd.TextPrediction
 		{
 			if (this.knowledge.ContainsKey(this.currentWord) == false)
 			{
-				Statistics statistics = new Statistics();
+				var statistics = new StatisticsT();
 				this.knowledge.Add(this.currentWord, statistics);
 			}
 			else
