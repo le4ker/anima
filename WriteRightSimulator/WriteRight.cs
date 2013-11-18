@@ -21,12 +21,12 @@ namespace Di.Kdd.WriteRightSimulator
 			this.aggresiveThreshold = aggresiveThreshold;
 		}
 
-		public void SetTrimThreshold(int trimThreshold)
+		public void SetTrimThreshold (int trimThreshold)
 		{
 			this.engine.SetThreshold(trimThreshold);
 		}
 
-		public void SetTrimPercentage(float trimPercentage)
+		public void SetTrimPercentage (float trimPercentage)
 		{
 			this.engine.SetTrimPercentage(trimPercentage);
 		}

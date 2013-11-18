@@ -30,17 +30,17 @@ namespace Di.Kdd.TextPrediction
 
 		#region Public Methods
 
-		public string GetEndOfDb()
+		public string GetEndOfDb ()
 		{
 			return EndOfDb;
 		}
 
-		public static void SetWordSeparators(string wordSeparators)
+		public static void SetWordSeparators (string wordSeparators)
 		{
 			Trie.SetWordSeparators(wordSeparators);
 		}
 
-		public Dictionary<char, float> GetPredictions()
+		public Dictionary<char, float> GetPredictions ()
 		{
 			var popularity = 0;
 			var postfixesCounter = 0;
@@ -88,7 +88,7 @@ namespace Di.Kdd.TextPrediction
 			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
 		}
 
-		public void CharTyped(char character)
+		public void CharTyped (char character)
 		{
 			if (Trie.IsWordSeparator(character))
 			{
@@ -108,12 +108,12 @@ namespace Di.Kdd.TextPrediction
 			}
 		}
 
-		public void PredictionCancelled()
+		public void PredictionCancelled ()
 		{
 			this.ResetState();
 		}
 
-		public void SaveDB(string dbPath)
+		public void SaveDB (string dbPath)
 		{
 			if (File.Exists(dbPath))
 			{
@@ -132,7 +132,7 @@ namespace Di.Kdd.TextPrediction
 			writer.Close();
 		}
 
-		public void LoadDB(string dbPath)
+		public void LoadDB (string dbPath)
 		{
 			if (File.Exists(dbPath) == false)
 			{
@@ -162,7 +162,7 @@ namespace Di.Kdd.TextPrediction
 			this.GetTrained();
 		}
 
-		public bool ValidCharacter(char character)
+		public bool ValidCharacter (char character)
 		{
 			return (Trie.IsLatinLetter(character) || Trie.IsWordSeparator(character));
 		}
@@ -171,7 +171,7 @@ namespace Di.Kdd.TextPrediction
 
 		#region Private Methods
 
-		private void Init()
+		private void Init ()
 		{
 			var reader = File.OpenText(WordsFileName);
 
@@ -191,14 +191,14 @@ namespace Di.Kdd.TextPrediction
 			reader.Close();
 		}
 
-		private void ResetState()
+		private void ResetState ()
 		{
 			this.currentWord = "";
 			this.currentSubTrie = this.trie;
 			this.isUnknownWord = false;
 		}
 
-		private void GetTrained()
+		private void GetTrained ()
 		{
 			foreach (var data in this.knowledge)
 			{
@@ -207,7 +207,7 @@ namespace Di.Kdd.TextPrediction
 			}
 		}
 
-		private void WordTyped()
+		private void WordTyped ()
 		{
 			if (this.knowledge.ContainsKey(this.currentWord) == false)
 			{
@@ -233,7 +233,7 @@ namespace Di.Kdd.TextPrediction
 			this.ResetState();
 		}
 
-		private float Evaluate(int popularity, int prefixesCounter)
+		private float Evaluate (int popularity, int prefixesCounter)
 		{
 			var usageRatio = PersonalizationFactor * this.wordsTyped / this.trie.Size();
 

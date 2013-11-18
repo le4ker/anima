@@ -23,7 +23,7 @@ namespace Di.Kdd.TextPrediction
 			}
 		}
 
-		public void Add(string word)
+		public void Add (string word)
 		{
 			word = word.ToLower();
 
@@ -35,7 +35,7 @@ namespace Di.Kdd.TextPrediction
 			this.InnerAdd(word);
 		}
 
-		public void LoadWordsFromFile(string fileName)
+		public void LoadWordsFromFile (string fileName)
 		{
 			StreamReader reader = File.OpenText(fileName);
 
@@ -54,25 +54,25 @@ namespace Di.Kdd.TextPrediction
 			subTries.Clear();
 		}
 
-		public int GetSubtrieSize(char letter)
+		public int GetSubtrieSize (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter].size : 0;
 		}
 
-		public int Size()
+		public int Size ()
 		{
 			return this.size;
 		}
 
-		public void WasTyped(string word)
+		public void WasTyped (string word)
 		{
 			this.WasTyped(word, 1);
 		}
 
 
-		public void WasTyped(string word, int times)
+		public void WasTyped (string word, int times)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -95,21 +95,21 @@ namespace Di.Kdd.TextPrediction
 			this.subTries[firstChar].WasTyped(postfix, times);
 		}
 
-		public Trie GetSubTrie(char letter)
+		public Trie GetSubTrie (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter] : null;
 		}
 
-		public int GetPopularity(char letter)
+		public int GetPopularity (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter].GetPopularity() : 0;
 		}
 
-		public bool Search(string word)
+		public bool Search (string word)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -129,22 +129,22 @@ namespace Di.Kdd.TextPrediction
 			}
 		}
 
-		public static bool IsLatinLetter(char letter)
+		public static bool IsLatinLetter (char letter)
 		{
 			return Trie.LatinLetters.Contains(Char.ToString(Char.ToLower(letter)));
 		}
 
-		public static bool IsWordSeparator(char letter)
+		public static bool IsWordSeparator (char letter)
 		{
 			return Trie.WordSeparators.Contains(Char.ToString(Char.ToLower(letter)));
 		}
 
-		public static void SetWordSeparators(string wordSeparators)
+		public static void SetWordSeparators (string wordSeparators)
 		{
 			Trie.WordSeparators = wordSeparators;
 		}
 
-		private bool ValidWord(string word)
+		private bool ValidWord (string word)
 		{
 			foreach (var letter in word)
 			{
@@ -157,7 +157,7 @@ namespace Di.Kdd.TextPrediction
 			return true;
 		}
 
-		private void InnerAdd(string word)
+		private void InnerAdd (string word)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -176,7 +176,7 @@ namespace Di.Kdd.TextPrediction
 			this.size++;
 		}
 
-		private int GetPopularity()
+		private int GetPopularity ()
 		{
 			return this.popularity;
 		}

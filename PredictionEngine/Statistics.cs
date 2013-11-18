@@ -8,7 +8,7 @@ namespace Di.Kdd.TextPrediction
 
 		public Statistics() { }
 
-		public virtual void InitFromString(string text)
+		public virtual void InitFromString (string text)
 		{
 			this.usageCounter = Int32.Parse(text);
 		}
@@ -17,7 +17,7 @@ namespace Di.Kdd.TextPrediction
 			this.usageCounter++;
 		}
 
-		public int GetPopularity()
+		public int GetPopularity ()
 		{
 			return this.usageCounter;
 		}
