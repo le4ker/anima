@@ -6,7 +6,7 @@ namespace Di.Kdd.WriteRightSimulator
 	class Shell
 	{
 		private const char ShellExit = '±';
-		private const string PredictionwriteRightInstance = "writerightdb.txt";
+		private const string WriteRightDb = "writerightdb.txt";
 
 		public static void Main (string[] args)
 		{

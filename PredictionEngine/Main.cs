@@ -6,12 +6,12 @@ namespace Di.Kdd.TextPrediction
 	class Shell
 	{
 		private const char ShellExit = '±';
-		private const string PredictionEngineInstance = "database.txt";
+		private const string EngineDb = "database.txt";
 
 		public static void Main (string[] args)
 		{
 			var engine = new PredictionEngine<Statistics>();
-			engine.LoadDB(PredictionEngineInstance);
+			engine.LoadDB(EngineDb);
 
 			var buffer = "";
 			var letter = '\0';
@@ -57,7 +57,7 @@ namespace Di.Kdd.TextPrediction
 
 			} while (true);
 
-			engine.SaveDB(PredictionEngineInstance);
+			engine.SaveDB(EngineDb);
 		}
 	}
 }
