@@ -25,7 +25,7 @@ namespace Di.Kdd.WriteRightSimulator
 			this.timestamp = timestamp;
 		}
 
-		public long GetTimestamp()
+		public long GetTimestamp ()
 		{
 			return this.timestamp;
 		}

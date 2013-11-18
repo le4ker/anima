@@ -9,12 +9,12 @@ namespace Di.Kdd.WriteRightSimulator
 		private int threshold = 1500;
 		private float trimPercentage = 0.3F;
 
-		public void SetThreshold(int threshold)
+		public void SetThreshold (int threshold)
 		{
 			this.threshold = threshold;
 		}
 
-		public void SetTrimPercentage(float trimPercentage)
+		public void SetTrimPercentage (float trimPercentage)
 		{
 			this.trimPercentage = trimPercentage;
 		}

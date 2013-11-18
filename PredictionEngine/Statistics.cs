@@ -6,13 +6,13 @@ namespace Di.Kdd.TextPrediction
 	{
 		protected int usageCounter = 1;
 
-		public Statistics() { }
+		public Statistics () { }
 
 		public virtual void InitFromString (string text)
 		{
 			this.usageCounter = Int32.Parse(text);
 		}
-		public virtual void WordTyped()
+		public virtual void WordTyped ()
 		{
 			this.usageCounter++;
 		}
