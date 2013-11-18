@@ -16,6 +16,7 @@ namespace Di.Kdd.TextPrediction
 		private bool isUnknownWord = false;
 
 		private const string WordsFileName = "words.txt";
+		private const string EndOfDb = "±±±±±±±±±±±±±±";
 		private const float PersonalizationFactor = 1.0F;
 
 		#region Constructors
@@ -28,6 +29,11 @@ namespace Di.Kdd.TextPrediction
 		#endregion
 
 		#region Public Methods
+
+		public string GetEndOfDb()
+		{
+			return EndOfDb;
+		}
 
 		public static void SetWordSeparators(string wordSeparators)
 		{
@@ -121,6 +127,8 @@ namespace Di.Kdd.TextPrediction
 				writer.WriteLine("{0} {1}", data.Key, data.Value);
 			}
 
+			writer.WriteLine(EndOfDb);
+
 			writer.Close();
 		}
 
@@ -138,7 +146,7 @@ namespace Di.Kdd.TextPrediction
 
 			var line = "";
 
-			while ((line = reader.ReadLine()) != null)
+			while ((line = reader.ReadLine()) != EndOfDb)
 			{
 				var columns = line.Split(' ');
 				var statisticsString = line.Remove(0, columns[0].Length);

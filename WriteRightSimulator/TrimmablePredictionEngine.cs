@@ -4,12 +4,12 @@ namespace Di.Kdd.WriteRightSimulator
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class TrimmablePredictionEngine : TextPrediction.PredictionEngine<WriteRightSimulator.Statistics>
+	public class TrimmablePredictionEngine : TextPrediction.PredictionEngine<Statistics>
 	{
 		private int threshold = 1500;
 		private float trimPercentage = 0.3F;
 
-		public void Trim (string dbPath)
+		public void TrimAndSaveDb (string dbPath)
 		{
 			if (this.knowledge.Count >= this.threshold)
 			{
