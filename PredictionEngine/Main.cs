@@ -14,28 +14,28 @@ namespace Di.Kdd.TextPrediction
 			engine.LoadDB(EngineDb);
 
 			var buffer = "";
-			var letter = '\0';
+			var character = '\0';
 
 			var predictions = new Dictionary<char, float>();
 
 			do
 			{
 				var key = Console.ReadKey();
-				letter = key.KeyChar;
+				character = key.KeyChar;
 
-				if (letter == ShellExit)
+				if (character == ShellExit)
 				{
 					break;
 				}
 
-				if (engine.ValidCharacter(letter) == false)
+				if (engine.ValidCharacter(character) == false)
 				{
 					continue;
 				}
 
-				engine.CharTyped(letter);
+				engine.CharacterTyped(character);
 
-				buffer += letter;
+				buffer += character;
 
 				Console.Clear();
 				Console.WriteLine(buffer);
@@ -44,7 +44,9 @@ namespace Di.Kdd.TextPrediction
 
 				if (predictions.Count == 0)
 				{
-					Console.WriteLine("Unknown word\n");
+					Console.WriteLine("Unknown word!");
+
+					continue;
 				}
 
 				foreach (var prediction in predictions)

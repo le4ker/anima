@@ -27,7 +27,7 @@ namespace Di.Kdd.TextPrediction
 		{
 			word = word.ToLower();
 
-			if (this.ValidWord(word) == false)
+			if (Trie.IsValidWord(word) == false)
 			{
 				return;
 			}
@@ -144,7 +144,7 @@ namespace Di.Kdd.TextPrediction
 			Trie.WordSeparators = wordSeparators;
 		}
 
-		private bool ValidWord (string word)
+		public static bool IsValidWord (string word)
 		{
 			foreach (var letter in word)
 			{

@@ -16,6 +16,7 @@ namespace Di.Kdd.TextPrediction
 		private bool isUnknownWord = false;
 
 		private const string WordsFileName = "words.txt";
+		private const int WordsSize = 1500;
 		private const string EndOfDb = "±±±±±±±±±±±±±±";
 		private const float PersonalizationFactor = 1.0F;
 
@@ -88,7 +89,7 @@ namespace Di.Kdd.TextPrediction
 			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
 		}
 
-		public void CharTyped (char character)
+		public void CharacterTyped (char character)
 		{
 			if (Trie.IsWordSeparator(character))
 			{
@@ -175,17 +176,19 @@ namespace Di.Kdd.TextPrediction
 		{
 			var reader = File.OpenText(WordsFileName);
 
+			var words = 0;
 			var word = "";
 
-			while ((word = reader.ReadLine()) != null)
+			while (words < WordsSize && (word = reader.ReadLine()) != null)
 			{
-				if (this.knowledge.ContainsKey(word))
+				if (this.knowledge.ContainsKey(word) || Trie.IsValidWord(word) == false)
 				{
 					continue;
 				}
 
 				this.knowledge.Add(word, new StatisticsT());
 				this.trie.Add(word);
+				words++;
 			}
 
 			reader.Close();

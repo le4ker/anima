@@ -1,7 +1,9 @@
 namespace Di.Kdd.WriteRightSimulator
 {
 	using System;
+	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
 
 	public class WriteRight
 	{
@@ -10,6 +12,8 @@ namespace Di.Kdd.WriteRightSimulator
 		private int aggresiveThreshold = 5;
 
 		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
+
+		#region Mutators
 
 		public void SetK (int k)
 		{
@@ -29,6 +33,28 @@ namespace Di.Kdd.WriteRightSimulator
 		public void SetTrimPercentage (float trimPercentage)
 		{
 			this.engine.SetTrimPercentage(trimPercentage);
+		}
+
+		#endregion
+
+		public bool ValidCharacter (char character)
+		{
+			return this.engine.ValidCharacter(character);
+		}
+
+		public void CharacterTyped (char character)
+		{
+			this.engine.CharacterTyped (character);
+		}
+
+		public Dictionary<char, float> GetPredictions ()
+		{
+			return engine.GetPredictions();
+		}
+
+		public Dictionary<char, float> GetTopKPredictions ()
+		{
+			return this.engine.GetPredictions().OrderByDescending(x => x.Value).Take(this.k).ToDictionary(x => x.Key, x => x.Value);
 		}
 
 		public void LoadDB (string dbPath)
