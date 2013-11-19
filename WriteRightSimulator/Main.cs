@@ -56,7 +56,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 				foreach (var prediction in topKPredictions)
 				{
-					Console.WriteLine("P(" + prediction.Key.ToString() + ") = " + prediction.Value.ToString());
+					Console.WriteLine("P(" + prediction.Key + ") = " + prediction.Value);
 				}
 
 				Console.WriteLine("\n");
@@ -64,11 +64,11 @@ namespace Di.Kdd.WriteRightSimulator
 
 				var predictions = writeRight.GetPredictions();
 
-				foreach (var latinLetter in Trie.LatinLetters)
+				foreach (var prediction in predictions)
 				{
-					if (topKPredictions.ContainsKey(latinLetter) == false)
+					if (topKPredictions.ContainsKey(prediction.Key) == false)
 					{
-						Console.WriteLine("P(" + latinLetter.ToString() + ") = " + predictions[latinLetter].ToString());
+						Console.WriteLine("P(" + prediction.Key + ") = " + prediction.Value);
 					}
 				}
 

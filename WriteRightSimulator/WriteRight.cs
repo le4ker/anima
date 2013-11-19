@@ -12,7 +12,6 @@ namespace Di.Kdd.WriteRightSimulator
 		private int k = 26;
 		private int continuousSuccesses = 0;
 		private int aggresiveThreshold = 5;
-		private bool isIdle = false;
 
 		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
 
