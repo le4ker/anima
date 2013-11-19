@@ -17,29 +17,30 @@ namespace Di.Kdd.TextPrediction
 
 		private const string WordsFileName = "words.txt";
 		private const int WordsSize = 1500;
-		private const string EndOfDb = "±±±±±±±±±±±±±±";
+		private const string DbEndTrail = "±±±±±±±±±±±±±±";
 		private const float PersonalizationFactor = 1.0F;
-
-		#region Constructors
 
 		public PredictionEngine ()
 		{
 			this.currentSubTrie = this.trie;
 		}
 
-		#endregion
-
-		#region Public Methods
-
-		public string GetEndOfDb ()
+		public Boolean IsUnknownWord ()
 		{
-			return EndOfDb;
+			return this.isUnknownWord;
+		}
+
+		public string GetDbEndTrail ()
+		{
+			return DbEndTrail;
 		}
 
 		public static void SetWordSeparators (string wordSeparators)
 		{
 			Trie.SetWordSeparators(wordSeparators);
 		}
+
+		#region Public Methods
 
 		public Dictionary<char, float> GetPredictions ()
 		{
@@ -116,21 +117,15 @@ namespace Di.Kdd.TextPrediction
 
 		public void SaveDB (string dbPath)
 		{
-			if (File.Exists(dbPath))
+			using (var writer = new StreamWriter(dbPath, false))
 			{
-				File.Delete(dbPath);
+				foreach (var data in this.knowledge)
+				{
+					writer.WriteLine("{0} {1}", data.Key, data.Value);
+				}
+
+				writer.WriteLine(DbEndTrail);
 			}
-
-			var writer = new StreamWriter(File.OpenWrite(dbPath));
-
-			foreach (var data in this.knowledge)
-			{
-				writer.WriteLine("{0} {1}", data.Key, data.Value);
-			}
-
-			writer.WriteLine(EndOfDb);
-
-			writer.Close();
 		}
 
 		public void LoadDB (string dbPath)
@@ -147,7 +142,7 @@ namespace Di.Kdd.TextPrediction
 
 			var line = "";
 
-			while ((line = reader.ReadLine()) != EndOfDb)
+			while ((line = reader.ReadLine()) != DbEndTrail)
 			{
 				var columns = line.Split(' ');
 				var statisticsString = line.Remove(0, columns[0].Length);

@@ -17,7 +17,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 			var buffer = "";
 			var character = '\0';
-			var consoleColor = Console.ForegroundColor;
+			var foregroundColor = Console.ForegroundColor;
 
 			var topKPredictions = new Dictionary<char, float>();
 
@@ -31,7 +31,7 @@ namespace Di.Kdd.WriteRightSimulator
 					break;
 				}
 
-				if (writeRight.ValidCharacter(character) == false)
+				if (writeRight.IsValidCharacter(character) == false)
 				{
 					continue;
 				}
@@ -43,9 +43,9 @@ namespace Di.Kdd.WriteRightSimulator
 				Console.Clear();
 				Console.WriteLine(buffer);
 
-				topKPredictions = writeRight.GetTopKPredictions ();
+				topKPredictions = writeRight.GetTopKPredictions();
 
-				if (topKPredictions.Count == 0)
+				if (writeRight.IsUnknownWord())
 				{
 					Console.WriteLine("Unknown word!");
 
@@ -72,7 +72,7 @@ namespace Di.Kdd.WriteRightSimulator
 					}
 				}
 
-				Console.ForegroundColor = consoleColor;
+				Console.ForegroundColor = foregroundColor;
 
 			} while (true);
 

@@ -42,7 +42,7 @@ namespace Di.Kdd.TextPrediction
 
 				predictions = engine.GetPredictions();
 
-				if (predictions.Count == 0)
+				if (engine.IsUnknownWord())
 				{
 					Console.WriteLine("Unknown word!");
 
