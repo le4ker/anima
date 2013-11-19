@@ -1,33 +1,30 @@
-using System;
-
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
+	using System;
+
 	public class Statistics
 	{
-		private int usageCounter = 0;
+		protected int usageCounter = 1;
 
-		public Statistics()
+		public Statistics () { }
+
+		public virtual void InitFromString (string text)
 		{
+			this.usageCounter = Int32.Parse(text);
+		}
+		public virtual void WordTyped ()
+		{
+			this.usageCounter++;
 		}
 
-		public Statistics(string usageCounter)
+		public int GetPopularity ()
 		{
-			this.usageCounter = Int32.Parse(usageCounter);
-		}
-
-		public void WordTyped()
-		{
-			usageCounter++;
-		}
-
-		public int GetPopularity()
-		{
-			return usageCounter;
+			return this.usageCounter;
 		}
 
 		public override string ToString ()
 		{
-			return usageCounter.ToString();
+			return this.usageCounter.ToString();
 		}
 	}
 }

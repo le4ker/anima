@@ -1,50 +1,52 @@
-using System;
-using System.Collections.Generic;
-
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
+	using System;
+	using System.Collections.Generic;
+
 	class Shell
 	{
 		private const char ShellExit = '±';
-		private const string PredictionEngineInstance = "prediction_engine_instance.txt";
+		private const string EngineDb = "database.txt";
 
 		public static void Main (string[] args)
 		{
-			var engine = new PredictionEngine();
-			engine.Load(PredictionEngineInstance);
+			var engine = new PredictionEngine<Statistics>();
+			engine.LoadDB(EngineDb);
 
-			var input = "";
-			var letter = '\0';
+			var buffer = "";
+			var character = '\0';
 
 			var predictions = new Dictionary<char, float>();
 
 			do
 			{
 				var key = Console.ReadKey();
-				letter = key.KeyChar;
+				character = key.KeyChar;
 
-				if (letter == ShellExit)
+				if (character == ShellExit)
 				{
 					break;
 				}
 
-				if (PredictionEngine.ValidLetter(letter) == false)
+				if (engine.ValidCharacter(character) == false)
 				{
 					continue;
 				}
 
-				engine.LetterTyped(letter);
+				engine.CharacterTyped(character);
 
-				input += letter;
+				buffer += character;
 
 				Console.Clear();
-				Console.WriteLine(input);
+				Console.WriteLine(buffer);
 
-				predictions = engine.GetSortedPredictions();
+				predictions = engine.GetPredictions();
 
-				if (predictions.Count == 0)
+				if (engine.IsUnknownWord())
 				{
-					Console.WriteLine("Unknown word\n");
+					Console.WriteLine("Unknown word!");
+
+					continue;
 				}
 
 				foreach (var prediction in predictions)
@@ -54,9 +56,10 @@ namespace Di.Kdd.PredictionEngine
 						Console.WriteLine("P(" + prediction.Key + ") = " + prediction.Value);
 					}
 				}
+
 			} while (true);
 
-			engine.Save(PredictionEngineInstance);
+			engine.SaveDB(EngineDb);
 		}
 	}
 }

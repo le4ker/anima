@@ -1,47 +1,48 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
 
-	public class PredictionEngine
+	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private const string WordsFileName = "words.txt";
-
 		private Trie trie = new Trie();
-		private Dictionary<string, Statistics> knowledge = new Dictionary<string, Statistics>();
-		private float personalizationFactor = 1.0F;
+		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
 
 		private string currentWord = "";
 		private int wordsTyped = 0;
 		private Trie currentSubTrie;
-		private bool unknownWord = false;
+		private bool isUnknownWord = false;
 
-		public static char [] latinLetters = {
-												'a', 'b', 'c', 'd', 'e', 'f', 'g',
-												'h', 'i', 'j', 'k', 'l', 'm', 'n',
-												'o', 'p', 'q', 'r', 's', 't', 'u', 
-												'v', 'w', 'x', 'y', 'z'
-											};
-
-		public static char [] wordSeparators = { ' ', '.', ',', '!' };
+		private const string WordsFileName = "words.txt";
+		private const int WordsSize = 1500;
+		private const string DbEndTrail = "±±±±±±±±±±±±±±";
+		private const float PersonalizationFactor = 1.0F;
 
 		public PredictionEngine ()
 		{
-			this.trie.LoadWordsFromFile(WordsFileName);
 			this.currentSubTrie = this.trie;
 		}
 
-		public Dictionary<char, float> GetSortedPredictions()
+		public Boolean IsUnknownWord ()
 		{
-			var predictions = this.GetPredictions();
-
-			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
+			return this.isUnknownWord;
 		}
 
-		public Dictionary<char, float> GetPredictions()
+		public string GetDbEndTrail ()
+		{
+			return DbEndTrail;
+		}
+
+		public static void SetWordSeparators (string wordSeparators)
+		{
+			Trie.SetWordSeparators(wordSeparators);
+		}
+
+		#region Public Methods
+
+		public Dictionary<char, float> GetPredictions ()
 		{
 			var popularity = 0;
 			var postfixesCounter = 0;
@@ -50,11 +51,11 @@ namespace Di.Kdd.PredictionEngine
 
 			if (this.currentSubTrie == null)
 			{
-				this.unknownWord = true;
+				this.isUnknownWord = true;
 				return new Dictionary<char, float>();
 			}
 
-			foreach (char possibleNextLetter in latinLetters)
+			foreach (var possibleNextLetter in Trie.LatinLetters)
 			{
 				popularity = this.currentSubTrie.GetPopularity(possibleNextLetter);
 				postfixesCounter = this.currentSubTrie.GetSubtrieSize(possibleNextLetter);
@@ -68,14 +69,14 @@ namespace Di.Kdd.PredictionEngine
 
 			if (evaluationSum == 0)
 			{
-				foreach (char letter in latinLetters)
+				foreach (var letter in Trie.LatinLetters)
 				{
 					predictions.Add(letter, 0.0F);
 				}
 			}
 			else
 			{
-				foreach (char possibleNextLetter in latinLetters)
+				foreach (var possibleNextLetter in Trie.LatinLetters)
 				{
 					popularity = this.currentSubTrie.GetPopularity(possibleNextLetter);
 					postfixesCounter = this.currentSubTrie.GetSubtrieSize(possibleNextLetter);
@@ -86,110 +87,129 @@ namespace Di.Kdd.PredictionEngine
 				}
 			}
 
-			return predictions;
+			return predictions.OrderByDescending(kv => kv.Value).ToDictionary(k => k.Key, v => v.Value);
 		}
 
-		public void LetterTyped(char letter)
+		public void CharacterTyped (char character)
 		{
-			if (Array.IndexOf(wordSeparators, letter) >= 0)
+			if (Trie.IsWordSeparator(character))
 			{
 				this.WordTyped();
 				return;
 			}
 
-			this.currentWord += letter;
+			this.currentWord += character;
 
 			if (this.currentSubTrie != null)
 			{
-				this.currentSubTrie = this.currentSubTrie.GetSubTrie(letter);
+				this.currentSubTrie = this.currentSubTrie.GetSubTrie(character);
 			}
 			else
 			{
-				this.unknownWord = true;
+				this.isUnknownWord = true;
 			}
 		}
 
-		public void PredictionCancelled()
+		public void PredictionCancelled ()
 		{
-			this.Reset();
+			this.ResetState();
 		}
 
-		public void Save(string fileName)
+		public void SaveDB (string dbPath)
 		{
-			if (File.Exists(fileName))
+			using (var writer = new StreamWriter(dbPath, false))
 			{
-				File.Delete(fileName);
+				foreach (var data in this.knowledge)
+				{
+					writer.WriteLine("{0} {1}", data.Key, data.Value);
+				}
+
+				writer.WriteLine(DbEndTrail);
 			}
-
-			var writer = new StreamWriter(File.OpenWrite(fileName));
-
-			foreach (KeyValuePair<string, Statistics> data in this.knowledge)
-			{
-				writer.WriteLine("{0}±{1}", data.Key, data.Value);
-			}
-
-			writer.Close();
 		}
 
-		public void Load(string fileName)
+		public void LoadDB (string dbPath)
 		{
-			if (File.Exists(fileName) == false)
+			if (File.Exists(dbPath) == false)
 			{
+				this.Init();
+				this.GetTrained();
+
 				return;
 			}
 
-			var reader = File.OpenText(fileName);
+			var reader = File.OpenText(dbPath);
 
 			var line = "";
-			while((line = reader.ReadLine()) != null)
+
+			while ((line = reader.ReadLine()) != DbEndTrail)
 			{
-				var stringReader = new StringReader(line);
-				var keyLength = line.IndexOf('±');
-				var keyArray = new char[keyLength];
+				var columns = line.Split(' ');
+				var statisticsString = line.Remove(0, columns[0].Length);
 
-				stringReader.ReadBlock(keyArray, 0, keyLength);
-				var key = new string(keyArray);
+				var statistics = new StatisticsT();
+				statistics.InitFromString(statisticsString);
 
-				stringReader.Read();
-
-				var statistics = new Statistics(stringReader.ReadToEnd());
-
-				knowledge.Add(key, statistics);
+				knowledge.Add(columns[0], statistics);
 			}
 
 			reader.Close();
+
 			this.GetTrained();
 		}
 
-		public static bool ValidLetter(char letter)
+		public bool ValidCharacter (char character)
 		{
-			letter = Char.ToLower(letter);
-
-			return (letter >= 'a' & letter <= 'z') || (Array.IndexOf(wordSeparators, letter) >= 0);
+			return (Trie.IsLatinLetter(character) || Trie.IsWordSeparator(character));
 		}
 
-		private void Reset()
+		#endregion
+
+		#region Private Methods
+
+		private void Init ()
+		{
+			var reader = File.OpenText(WordsFileName);
+
+			var words = 0;
+			var word = "";
+
+			while (words < WordsSize && (word = reader.ReadLine()) != null)
+			{
+				if (this.knowledge.ContainsKey(word) || Trie.IsValidWord(word) == false)
+				{
+					continue;
+				}
+
+				this.knowledge.Add(word, new StatisticsT());
+				this.trie.Add(word);
+				words++;
+			}
+
+			reader.Close();
+		}
+
+		private void ResetState ()
 		{
 			this.currentWord = "";
 			this.currentSubTrie = this.trie;
-			this.unknownWord = false;
+			this.isUnknownWord = false;
 		}
 
-		private void GetTrained()
+		private void GetTrained ()
 		{
-			foreach (KeyValuePair<string, Statistics> data in this.knowledge)
+			foreach (var data in this.knowledge)
 			{
 				this.trie.WasTyped(data.Key, data.Value.GetPopularity());
 				this.wordsTyped += data.Value.GetPopularity();
 			}
 		}
 
-		private void WordTyped()
+		private void WordTyped ()
 		{
 			if (this.knowledge.ContainsKey(this.currentWord) == false)
 			{
-				Statistics statistics = new Statistics();
-				statistics.WordTyped();
+				var statistics = new StatisticsT();
 				this.knowledge.Add(this.currentWord, statistics);
 			}
 			else
@@ -197,24 +217,23 @@ namespace Di.Kdd.PredictionEngine
 				this.knowledge[this.currentWord].WordTyped();
 			}
 
-			if (this.unknownWord == false)
+			if (this.isUnknownWord)
 			{
-				this.trie.WasTyped(this.currentWord);
+				this.trie.Add(this.currentWord);
 			}
 			else
 			{
-				this.trie.Add(this.currentWord);
-				this.AddCurrentWordToWordsFile();
+				this.trie.WasTyped(this.currentWord);
 			}
 
 			this.wordsTyped++;
 
-			this.Reset();
+			this.ResetState();
 		}
 
-		private float Evaluate(int popularity, int prefixesCounter)
+		private float Evaluate (int popularity, int prefixesCounter)
 		{
-			var usageRatio = this.personalizationFactor * this.wordsTyped / this.trie.Size();
+			var usageRatio = PersonalizationFactor * this.wordsTyped / this.trie.Size();
 
 			if (usageRatio > 1)
 			{
@@ -224,12 +243,7 @@ namespace Di.Kdd.PredictionEngine
 			return usageRatio * popularity + (1 - usageRatio) * prefixesCounter;
 		}
 
-		private void AddCurrentWordToWordsFile()
-		{
-			var writer = File.AppendText(WordsFileName);
-			writer.WriteLine(this.currentWord);
-			writer.Close();
-		}
+		#endregion
 	}
 }
 

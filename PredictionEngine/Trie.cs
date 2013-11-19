@@ -1,11 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Di.Kdd.PredictionEngine
+namespace Di.Kdd.TextPrediction
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+
 	public class Trie
 	{
+		public static string LatinLetters = "abcdefghijklmnopqrstuvwxyz";
+		public static string WordSeparators = " .,!";
+
 		private int size = 1;
 		private int popularity = 0;
 		private Dictionary<char, Trie> subTries;
@@ -14,17 +17,17 @@ namespace Di.Kdd.PredictionEngine
 		{
 			this.subTries = new Dictionary<char, Trie>();
 
-			foreach (var letter in PredictionEngine.latinLetters)
+			foreach (var letter in Trie.LatinLetters)
 			{
 				this.subTries.Add(letter, null);
 			}
 		}
 
-		public void Add(string word)
+		public void Add (string word)
 		{
 			word = word.ToLower();
 
-			if (this.ValidWord(word) == false)
+			if (Trie.IsValidWord(word) == false)
 			{
 				return;
 			}
@@ -32,7 +35,7 @@ namespace Di.Kdd.PredictionEngine
 			this.InnerAdd(word);
 		}
 
-		public void LoadWordsFromFile(string fileName)
+		public void LoadWordsFromFile (string fileName)
 		{
 			StreamReader reader = File.OpenText(fileName);
 
@@ -51,25 +54,25 @@ namespace Di.Kdd.PredictionEngine
 			subTries.Clear();
 		}
 
-		public int GetSubtrieSize(char letter)
+		public int GetSubtrieSize (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter].size : 0;
 		}
 
-		public int Size()
+		public int Size ()
 		{
 			return this.size;
 		}
 
-		public void WasTyped(string word)
+		public void WasTyped (string word)
 		{
 			this.WasTyped(word, 1);
 		}
 
 
-		public void WasTyped(string word, int times)
+		public void WasTyped (string word, int times)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -84,24 +87,29 @@ namespace Di.Kdd.PredictionEngine
 			var firstChar = word[0];
 			var postfix = word.Substring(1);
 
+			if (this.subTries[firstChar] == null)
+			{
+				this.subTries[firstChar] = new Trie();
+			}
+
 			this.subTries[firstChar].WasTyped(postfix, times);
 		}
 
-		public Trie GetSubTrie(char letter)
+		public Trie GetSubTrie (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter] : null;
 		}
 
-		public int GetPopularity(char letter)
+		public int GetPopularity (char letter)
 		{
 			letter = Char.ToLower(letter);
 
 			return this.subTries[letter] != null ? this.subTries[letter].GetPopularity() : 0;
 		}
 
-		public bool Search(string word)
+		public bool Search (string word)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -110,7 +118,7 @@ namespace Di.Kdd.PredictionEngine
 
 			var firstLetter = word[0];
 
-			if (this.subTries[firstLetter] == null)
+			if (this.subTries.ContainsKey(firstLetter) == false)
 			{
 				return false;
 			}
@@ -121,11 +129,26 @@ namespace Di.Kdd.PredictionEngine
 			}
 		}
 
-		private bool ValidWord(string word)
+		public static bool IsLatinLetter (char letter)
+		{
+			return Trie.LatinLetters.Contains(Char.ToString(Char.ToLower(letter)));
+		}
+
+		public static bool IsWordSeparator (char letter)
+		{
+			return Trie.WordSeparators.Contains(Char.ToString(Char.ToLower(letter)));
+		}
+
+		public static void SetWordSeparators (string wordSeparators)
+		{
+			Trie.WordSeparators = wordSeparators;
+		}
+
+		public static bool IsValidWord (string word)
 		{
 			foreach (var letter in word)
 			{
-				if (Array.IndexOf(PredictionEngine.latinLetters, letter) < 0)
+				if (Trie.IsLatinLetter(letter) == false )
 				{
 					return false;
 				}
@@ -134,7 +157,7 @@ namespace Di.Kdd.PredictionEngine
 			return true;
 		}
 
-		private void InnerAdd(string word)
+		private void InnerAdd (string word)
 		{
 			if (String.IsNullOrEmpty(word))
 			{
@@ -153,7 +176,7 @@ namespace Di.Kdd.PredictionEngine
 			this.size++;
 		}
 
-		private int GetPopularity()
+		private int GetPopularity ()
 		{
 			return this.popularity;
 		}
