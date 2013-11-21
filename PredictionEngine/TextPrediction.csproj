@@ -41,6 +41,7 @@
     <Compile Include="Statistics.cs" />
     <Compile Include="Trie.cs" />
     <Compile Include="PredictionEngine.cs" />
+    <Compile Include="Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

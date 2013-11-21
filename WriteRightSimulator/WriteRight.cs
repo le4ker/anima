@@ -34,7 +34,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 		public void SetTrimThreshold (int trimThreshold)
 		{
-			this.engine.SetThreshold(trimThreshold);
+			this.engine.SetTrimThreshold(trimThreshold);
 		}
 
 		public void SetTrimPercentage (float trimPercentage)
@@ -80,6 +80,8 @@ namespace Di.Kdd.WriteRightSimulator
 		{
 			this.k++;
 			this.continuousSuccesses = 0;
+
+			Logger.Log("Regression, new k: " + this.k);
 		}
 
 		public void LoadDB (string dbPath)
@@ -106,6 +108,8 @@ namespace Di.Kdd.WriteRightSimulator
 				this.k = int.Parse(columns[0]);
 				this.continuousSuccesses = int.Parse(columns[1]);
 			}
+
+			Logger.Log("Loaded writeright from DB");
 		}
 
 		public void SaveDB (string dbPath)
@@ -116,6 +120,8 @@ namespace Di.Kdd.WriteRightSimulator
 			{
 				writer.WriteLine(this.ToString());
 			}
+
+			Logger.Log("Saved writeright to DB");
 		}
 
 		public override string ToString ()
@@ -138,6 +144,8 @@ namespace Di.Kdd.WriteRightSimulator
 				if (k > 1)
 				{
 					k--;
+
+					Logger.Log("Aggression, new k: " + this.k);
 				}
 			}
 		}
