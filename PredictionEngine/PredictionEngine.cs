@@ -95,6 +95,7 @@ namespace Di.Kdd.TextPrediction
 			if (Trie.IsWordSeparator(character))
 			{
 				this.WordTyped();
+
 				return;
 			}
 
@@ -113,19 +114,6 @@ namespace Di.Kdd.TextPrediction
 		public void PredictionCancelled ()
 		{
 			this.ResetState();
-		}
-
-		public void SaveDB (string dbPath)
-		{
-			using (var writer = new StreamWriter(dbPath, false))
-			{
-				foreach (var data in this.knowledge)
-				{
-					writer.WriteLine("{0} {1}", data.Key, data.Value);
-				}
-
-				writer.WriteLine(DbEndTrail);
-			}
 		}
 
 		public void LoadDB (string dbPath)
@@ -156,6 +144,23 @@ namespace Di.Kdd.TextPrediction
 			reader.Close();
 
 			this.GetTrained();
+
+			Logger.Log("Loaded prediction engine from DB");
+		}
+
+		public void SaveDB (string dbPath)
+		{
+			using (var writer = new StreamWriter(dbPath, false))
+			{
+				foreach (var data in this.knowledge)
+				{
+					writer.WriteLine("{0} {1}", data.Key, data.Value);
+				}
+
+				writer.WriteLine(DbEndTrail);
+			}
+
+			Logger.Log("Saved prediction engine to DB");
 		}
 
 		public bool ValidCharacter (char character)

@@ -35,20 +35,6 @@ namespace Di.Kdd.TextPrediction
 			this.InnerAdd(word);
 		}
 
-		public void LoadWordsFromFile (string fileName)
-		{
-			StreamReader reader = File.OpenText(fileName);
-
-			var word = "";
-
-			while ((word = reader.ReadLine()) != null)
-			{
-				this.Add(word);
-			}
-
-			reader.Close();
-		}
-
 		public void Clear()
 		{
 			subTries.Clear();
