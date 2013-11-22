@@ -5,7 +5,7 @@ namespace Di.Kdd.PredictionQualityTestSuite
 
 	public class Scenarios
 	{
-		public static Dictionary<string, Scenario> scenarios = new Dictionary<string, Scenario>();
+		protected static Dictionary<string, Scenario> scenarios = new Dictionary<string, Scenario>();
 
 		public static void Execute ()
 		{
@@ -16,7 +16,24 @@ namespace Di.Kdd.PredictionQualityTestSuite
 				Console.WriteLine("Executing: " + scenario.Key);
 
 				scenario.Value.Setup();
-				scenario.Value.Run();
+
+				var foregroundColor = Console.ForegroundColor;
+
+				if (scenario.Value.Run())
+				{
+					Console.ForegroundColor = ConsoleColor.Green;
+
+					Console.WriteLine("Success");
+				}
+				else
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+
+					Console.WriteLine("Fail. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate());
+				}
+
+				Console.ForegroundColor = foregroundColor;
+
 				scenario.Value.Teardown();
 			}
 		}
