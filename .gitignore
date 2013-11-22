@@ -4,3 +4,7 @@
 WriteRightSimulator/bin/Debug/writerightdb.txt
 
 PredictionEngine/bin/Debug/database.txt
+
+*.userprefs
+
+*.userprefs

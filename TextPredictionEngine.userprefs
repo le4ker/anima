@@ -3,10 +3,14 @@
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
+<<<<<<< HEAD
         <State expanded="True">
           <Node name="PredictionQualityTestSuite" expanded="True">
             <Node name="Main.cs" selected="True" />
           </Node>
+=======
+        <State expanded="True" selected="True">
+>>>>>>> add-test-suite
           <Node name="TextPrediction" expanded="True" />
           <Node name="WriteRightSimulator" expanded="True" />
         </State>
