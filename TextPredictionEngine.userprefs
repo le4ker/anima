@@ -1,20 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WriteRightSimulator/WriteRight.cs">
-    <Files>
-      <File FileName="WriteRightSimulator/TrimmablePredictionEngine.cs" Line="17" Column="55" />
-      <File FileName="PredictionEngine/PredictionEngine.cs" Line="33" Column="33" />
-      <File FileName="WriteRightSimulator/WriteRight.cs" Line="54" Column="3" />
-      <File FileName="PredictionEngine/Main.cs" Line="48" Column="6" />
-      <File FileName="WriteRightSimulator/Main.cs" Line="50" Column="41" />
-      <File FileName="PredictionEngine/Trie.cs" Line="65" Column="4" />
-      <File FileName="WriteRightSimulator/Statistics.cs" Line="44" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="TextPrediction" expanded="True" />
-          <Node name="WriteRightSimulator" expanded="True" selected="True" />
+          <Node name="WriteRightSimulator" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
