@@ -6,7 +6,7 @@ namespace Di.Kdd.PredictionQualityTestSuite
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("Hello World!");
+			Scenarios.Execute();
 		}
 	}
 }
