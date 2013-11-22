@@ -8,3 +8,7 @@ PredictionEngine/bin/Debug/database.txt
 *.userprefs
 
 *.userprefs
+
+TextPredictionEngine.userprefs
+
+*.userprefs
