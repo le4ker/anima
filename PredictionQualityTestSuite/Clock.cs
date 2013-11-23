@@ -14,20 +14,27 @@ namespace Di.Kdd.PredictionQualityTestSuite
 		public static long Day = 24 * Clock.Hour;
 		public static long Week = 7 * Clock.Day;
 
-		private static long clock;
+		private static long clock = 0;
 
-		private Clock ()
+		private static void LazyInitialization ()
 		{
-			Clock.clock = DateTime.Now.Ticks;
+			if (clock == 0)
+			{
+				Clock.clock = DateTime.Now.Ticks;
+			}
 		}
 
 		public static void TimeFlies (long howMuch)
 		{
+			Clock.LazyInitialization();
+
 			Clock.clock += howMuch;
 		}
 
 		public static long Now ()
 		{				
+			Clock.LazyInitialization();
+
 			return Clock.clock;
 		}
 	}
