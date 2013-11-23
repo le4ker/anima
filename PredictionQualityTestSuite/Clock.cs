@@ -16,25 +16,18 @@ namespace Di.Kdd.PredictionQualityTestSuite
 
 		private static long clock = 0;
 
-		private static void LazyInitialization ()
+		public static void Start ()
 		{
-			if (clock == 0)
-			{
-				Clock.clock = DateTime.Now.Ticks;
-			}
+			Clock.clock = DateTime.Now.Ticks;
 		}
 
 		public static void TimeFlies (long howMuch)
 		{
-			Clock.LazyInitialization();
-
 			Clock.clock += howMuch;
 		}
 
 		public static long Now ()
 		{				
-			Clock.LazyInitialization();
-
 			return Clock.clock;
 		}
 	}
