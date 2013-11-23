@@ -7,7 +7,12 @@ namespace Di.Kdd.PredictionQualityTestSuite
 
 	public class Scenarios
 	{
-		protected static Dictionary<string, Scenario> scenarios = new Dictionary<string, Scenario>();
+		private static Dictionary<string, Scenario> scenarios = new Dictionary<string, Scenario>();
+
+		public static void AddScenario (Scenario scenario)
+		{
+			Scenarios.scenarios.Add(scenario.GetName(), scenario);
+		}
 
 		public static void Execute ()
 		{

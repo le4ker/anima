@@ -12,6 +12,8 @@ namespace Di.Kdd.PredictionQualityTestSuite
 		{
 			this.name = name;
 			this.successRate = successRate;
+
+			Scenarios.AddScenario(this);
 		}
 
 		#region Accessors
