@@ -61,6 +61,17 @@ namespace Di.Kdd.TextPrediction
 			}
 		}
 
+		public static void Log (string what, ConsoleColor color)
+		{
+			var original = Console.ForegroundColor;
+
+			Console.ForegroundColor = color;
+
+			Logger.Log(what);
+
+			Console.ForegroundColor = original;
+		}
+
 		~Logger()
 		{
 			lock (Logger.writterLock)
