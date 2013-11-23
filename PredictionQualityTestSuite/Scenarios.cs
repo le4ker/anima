@@ -1,5 +1,7 @@
 namespace Di.Kdd.PredictionQualityTestSuite
 {
+	using Di.Kdd.TextPrediction;
+
 	using System;
 	using System.Collections.Generic;
 
@@ -11,28 +13,18 @@ namespace Di.Kdd.PredictionQualityTestSuite
 		{
 			foreach (var scenario in Scenarios.scenarios)
 			{
-				// todo: use logger
-
-				Console.WriteLine("Executing: " + scenario.Key);
+				Logger.Log("Executing: " + scenario.Key);
 
 				scenario.Value.Setup();
 
-				var foregroundColor = Console.ForegroundColor;
-
 				if (scenario.Value.Run())
 				{
-					Console.ForegroundColor = ConsoleColor.Green;
-
-					Console.WriteLine("Success");
+					Logger.Log("Success", ConsoleColor.Green);
 				}
 				else
 				{
-					Console.ForegroundColor = ConsoleColor.Red;
-
-					Console.WriteLine("Fail. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate());
+					Logger.Log("Fail. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Red);
 				}
-
-				Console.ForegroundColor = foregroundColor;
 
 				scenario.Value.Teardown();
 			}
