@@ -40,6 +40,8 @@
     <Compile Include="Clock.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Scenarios.cs" />
+    <Compile Include="Emails.cs" />
+    <Compile Include="Email.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,5 +53,13 @@
       <Project>{9822701C-BA94-4C96-847A-93729E5AD00F}</Project>
       <Name>TextPrediction</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\engadget.txt" />
+    <None Include="Data\sp_slashdot.txt" />
+    <None Include="Data\zdnet-content.txt" />
   </ItemGroup>
 </Project>
