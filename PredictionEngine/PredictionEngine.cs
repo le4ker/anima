@@ -15,6 +15,7 @@ namespace Di.Kdd.TextPrediction
 		private Trie currentSubTrie;
 		private bool isUnknownWord = false;
 
+		private const string DataFolder = "../../Data/";
 		private const string WordsFileName = "words.txt";
 		private const int WordsSize = 1500;
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
@@ -174,7 +175,7 @@ namespace Di.Kdd.TextPrediction
 
 		private void Init ()
 		{
-			var reader = File.OpenText(WordsFileName);
+			var reader = File.OpenText(DataFolder + WordsFileName);
 
 			var words = 0;
 			var word = "";
