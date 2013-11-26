@@ -6,6 +6,8 @@ namespace Di.Kdd.PredictionQualityTestSuite
 	{
 		public static void Main (string[] args)
 		{
+			var basic = new BasicScenario();
+
 			Scenarios.Execute();
 		}
 	}

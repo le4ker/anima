@@ -40,8 +40,7 @@
     <Compile Include="Clock.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Scenarios.cs" />
-    <Compile Include="Emails.cs" />
-    <Compile Include="Email.cs" />
+    <Compile Include="BasicScenario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
