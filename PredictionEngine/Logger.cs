@@ -1,4 +1,4 @@
-namespace Di.Kdd.TextPrediction
+namespace Di.Kdd.Utilities
 {
 	using System;
 	using System.IO;

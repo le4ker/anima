@@ -1,6 +1,7 @@
 namespace Di.Kdd.WriteRightSimulator
 {
 	using Di.Kdd.TextPrediction;
+	using Di.Kdd.Utilities;
 
 	using System;
 	using System.Collections.Generic;
