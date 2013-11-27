@@ -58,8 +58,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\engadget.txt" />
     <None Include="Data\sp_slashdot.txt" />
     <None Include="Data\zdnet-content.txt" />
+    <None Include="Data\words.txt" />
   </ItemGroup>
 </Project>
