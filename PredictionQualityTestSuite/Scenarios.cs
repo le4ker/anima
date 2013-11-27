@@ -24,11 +24,11 @@ namespace Di.Kdd.PredictionQualityTestSuite
 
 				if (scenario.Value.Run())
 				{
-					Logger.Log("Success. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Green);
+					Logger.Log("Success! Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Green);
 				}
 				else
 				{
-					Logger.Log("Fail. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Red);
+					Logger.Log("Fail! Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Red);
 				}
 
 				scenario.Value.Teardown();
