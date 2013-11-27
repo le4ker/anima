@@ -11,10 +11,6 @@ namespace Di.Kdd.Utilities
 
 		private static Logger loggerInstance;
 
-		private Logger ()
-		{
-		}
-
 		public static void LogToFile(string path)
 		{
 			lock (Logger.writterLock)

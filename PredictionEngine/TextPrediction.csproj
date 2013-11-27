@@ -41,11 +41,12 @@
     <Compile Include="Statistics.cs" />
     <Compile Include="Trie.cs" />
     <Compile Include="PredictionEngine.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Utilities\Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\words.txt" />
