@@ -12,12 +12,13 @@ namespace Di.Kdd.WriteRightSimulator
 		private int k = 26;
 		private int continuousSuccesses = 0;
 		private int aggresiveThreshold = 5;
+		private bool isIdle = false;
 
 		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
 
 		public WriteRight ()
 		{
-			Trie.SetWordSeparators(" .,;:!?\n()[]*&@{}/_+=|%#'0123456789");
+			Trie.SetWordSeparators(" .,;:!?\n()[]*&@{}<>/-_+=|%#©~$'`\"0123456789");
 		}
 
 		#region Mutators
@@ -56,32 +57,49 @@ namespace Di.Kdd.WriteRightSimulator
 			return this.engine.ValidCharacter(character);
 		}
 
+		public bool IsWordSeparator (char character)
+		{
+			return this.engine.IsWordSeparator(character);
+		}
+
+		public bool IsIdle ()
+		{
+			return this.isIdle;
+		}
+
 		public void CharacterTyped (char character)
 		{
-			this.engine.CharacterTyped (character);
+			this.engine.CharacterTyped(character);
 
-			if (Trie.IsWordSeparator(character))
+			if (Trie.IsWordSeparator(character) && !this.isIdle)
 			{
 				this.SuccessfullPrediction();
+			}
+			else if (this.isIdle && Trie.IsWordSeparator(character))
+			{
+				this.isIdle = false;
 			}
 		}
 
 		public Dictionary<char, float> GetPredictions ()
 		{
-			return engine.GetPredictions();
+			return this.isIdle ? null : this.engine.GetPredictions();
 		}
 
 		public Dictionary<char, float> GetTopKPredictions ()
 		{
-			return this.engine.GetPredictions().Where(x => x.Value > 0.0F).OrderByDescending(x => x.Value).Take(this.k).ToDictionary(x => x.Key, x => x.Value);
+			return this.isIdle ? null : this.engine.GetPredictions().Where(x => x.Value > 0.0F).OrderByDescending(x => x.Value).Take(this.k).ToDictionary(x => x.Key, x => x.Value);
 		}
 
 		public void BadPrediction ()
 		{
-			this.k++;
-			this.continuousSuccesses = 0;
+			if (this.k < 26)
+			{
+				this.k++;
+			}
 
-			Logger.Log("Regression, new k: " + this.k);
+			this.continuousSuccesses = 0;
+			this.isIdle = true;
 		}
 
 		public void LoadDB (string dbPath)
@@ -124,6 +142,14 @@ namespace Di.Kdd.WriteRightSimulator
 			Logger.Log("Saved writeright to DB");
 		}
 
+		public void PurgeDB (string dbPath)
+		{
+			if (File.Exists(dbPath))
+			{
+				File.Delete(dbPath);
+			}
+		}
+
 		public override string ToString ()
 		{
 			return this.k.ToString() + " " + this.continuousSuccesses.ToString();
@@ -136,6 +162,7 @@ namespace Di.Kdd.WriteRightSimulator
 		private void SuccessfullPrediction ()
 		{
 			this.continuousSuccesses++;
+			this.isIdle = false;
 
 			if (this.continuousSuccesses == this.aggresiveThreshold)
 			{
@@ -144,8 +171,6 @@ namespace Di.Kdd.WriteRightSimulator
 				if (k > 1)
 				{
 					k--;
-
-					Logger.Log("Aggression, new k: " + this.k);
 				}
 			}
 		}

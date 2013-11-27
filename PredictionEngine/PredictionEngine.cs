@@ -41,6 +41,11 @@ namespace Di.Kdd.TextPrediction
 			Trie.SetWordSeparators(wordSeparators);
 		}
 
+		public bool IsWordSeparator (char character)
+		{
+			return Trie.IsWordSeparator(character);
+		}
+
 		#region Public Methods
 
 		public Dictionary<char, float> GetPredictions ()
