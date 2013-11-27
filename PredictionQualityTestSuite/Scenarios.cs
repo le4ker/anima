@@ -18,17 +18,17 @@ namespace Di.Kdd.PredictionQualityTestSuite
 		{
 			foreach (var scenario in Scenarios.scenarios)
 			{
-				Logger.Log("Executing: " + scenario.Key);
+				Logger.Log("Executing: " + scenario.Key, ConsoleColor.Green);
 
 				scenario.Value.Setup();
 
 				if (scenario.Value.Run())
 				{
-					Logger.Log("Success", ConsoleColor.Green);
+					Logger.Log("Success! Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Green);
 				}
 				else
 				{
-					Logger.Log("Fail. Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Red);
+					Logger.Log("Fail! Result: " + scenario.Value.GetResult() + " Success Rate: " + scenario.Value.GetSuccessRate(), ConsoleColor.Red);
 				}
 
 				scenario.Value.Teardown();

@@ -27,6 +27,6 @@ Global
 		{9822701C-BA94-4C96-847A-93729E5AD00F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = PredictionEngine\TextPrediction.csproj
+		StartupItem = PredictionQualityTestSuite\PredictionQualityTestSuite.csproj
 	EndGlobalSection
 EndGlobal

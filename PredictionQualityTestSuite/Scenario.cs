@@ -5,8 +5,8 @@ namespace Di.Kdd.PredictionQualityTestSuite
 	public abstract class Scenario
 	{
 		private string name;
-		private float result = 0.0F;
-		private float successRate;
+		protected float result = 0.0F;
+		protected float successRate;
 
 		public Scenario (string name, float successRate)
 		{

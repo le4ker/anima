@@ -73,6 +73,11 @@ namespace Di.Kdd.TextPrediction
 			var firstChar = word[0];
 			var postfix = word.Substring(1);
 
+			if (Trie.IsLatinLetter(firstChar) == false)
+			{
+				return;
+			}
+
 			if (this.subTries[firstChar] == null)
 			{
 				this.subTries[firstChar] = new Trie();
@@ -84,6 +89,11 @@ namespace Di.Kdd.TextPrediction
 		public Trie GetSubTrie (char letter)
 		{
 			letter = Char.ToLower(letter);
+
+			if (Trie.IsLatinLetter(letter) == false)
+			{
+				return null;
+			}
 
 			return this.subTries[letter] != null ? this.subTries[letter] : null;
 		}
