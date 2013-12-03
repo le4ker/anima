@@ -5,13 +5,13 @@ namespace Di.Kdd.PredictionQualityTestSuite
 
 	using System;
 
-	class MainClass
+	class Sell
 	{
 		public static void Main (string[] args)
 		{
 			Logger.LogToConsole();
 
-			var basic = new BasicScenario();
+			var experiment = new ExperimentScenario();
 
 			Scenarios.Execute();
 		}
