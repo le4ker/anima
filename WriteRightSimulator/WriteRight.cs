@@ -29,6 +29,11 @@ namespace Di.Kdd.WriteRightSimulator
 			this.k = k;
 		}
 
+		public void SetWordsSize(int wordsSize)
+		{
+			this.engine.SetWordsSize(wordsSize);
+		}
+
 		public void SetAggresiveThreshold (int aggresiveThreshold)
 		{
 			this.aggresiveThreshold = aggresiveThreshold;

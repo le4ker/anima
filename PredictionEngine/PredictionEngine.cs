@@ -9,6 +9,8 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
+		private int wordsSize = 1500;
+
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
 
@@ -19,7 +21,6 @@ namespace Di.Kdd.TextPrediction
 
 		private const string DataFolder = "../../Data/";
 		private const string WordsFileName = "words.txt";
-		private const int WordsSize = 1500;
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
 		private const float PersonalizationFactor = 1.0F;
 
@@ -41,6 +42,11 @@ namespace Di.Kdd.TextPrediction
 		public static void SetWordSeparators (string wordSeparators)
 		{
 			Trie.SetWordSeparators(wordSeparators);
+		}
+
+		public void SetWordsSize(int wordsSize)
+		{
+			this.wordsSize = wordsSize;
 		}
 
 		public bool IsWordSeparator (char character)
@@ -187,7 +193,7 @@ namespace Di.Kdd.TextPrediction
 			var words = 0;
 			var word = "";
 
-			while (words < WordsSize && (word = reader.ReadLine()) != null)
+			while (words < wordsSize && (word = reader.ReadLine()) != null)
 			{
 				if (this.knowledge.ContainsKey(word) || Trie.IsValidWord(word) == false)
 				{
