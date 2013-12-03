@@ -31,6 +31,7 @@ namespace Di.Kdd.PredictionQualityTestSuite
 					this.writeRight.SetK(k);
 
 					this.run();
+					this.stream.Reset();
 
 					Logger.Log("Words size: " + wordsSize + " k " + k + " result: " + this.result);
 				}

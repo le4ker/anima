@@ -56,6 +56,11 @@ namespace Di.Kdd.PredictionQualityTestSuite
 				return '\0';
 			}
 		}
+
+		public void Reset()
+		{
+			this.index = 0;
+		}
 	}
 }
 
