@@ -72,8 +72,10 @@ namespace Di.Kdd.Utilities
 		{
 			lock (Logger.writterLock)
 			{
-
-				Logger.writer.Close();
+				if (Logger.writer != null)
+				{
+					Logger.writer.Close();
+				}
 			}
 		}
 	}
