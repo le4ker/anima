@@ -25,7 +25,15 @@
 
 			this.location = new Location (new Coordinate (tokens [Tweet.LONG_INDEX]), new Coordinate (tokens [Tweet.LAT_INDEX]));
 
-			this.tweet = tokens [Tweet.TWEET_INDEX];
+			tokens = tokens [Tweet.TWEET_INDEX].Split (' ');
+
+			foreach (var token in tokens) {
+				if (token.StartsWith ("http:") == false && token.StartsWith ("https:") == false) {
+					this.tweet += token + " ";
+				} else {
+					Console.WriteLine (token);
+					}
+			}
 		}
 
 		public Tweet (string tweet, int time, Location location)

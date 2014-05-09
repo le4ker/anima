@@ -11,12 +11,13 @@
 			"214204613.txt", "2179897715.txt", "265441754.txt", "324386374.txt", "941839460.txt"
 		};
 
-		private List<User> users = new List<User>();
+		public List<User> Users = new List<User>();
 
 		public DataSet ()
 		{
 			foreach (var userFile in this.userFiles) {
-				this.users.Add(new User(userFile));
+				this.Users.Add(new User(userFile));
+
 			}
 		}
 	}
