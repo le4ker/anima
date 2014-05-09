@@ -3,7 +3,7 @@ namespace Di.Kdd.PredictionQualityTestSuite
 	using System;
 	using System.IO;
 
-	public class DataStream
+	public class DataStream : IWriteRightStream
 	{
 		private int index = 0;
 		private string stream = "";

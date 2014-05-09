@@ -9,7 +9,7 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 1500;
+		private int wordsSize = 10000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
@@ -22,7 +22,7 @@ namespace Di.Kdd.TextPrediction
 		private const string DataFolder = "../../Data/";
 		private const string WordsFileName = "words.txt";
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
-		private const float PersonalizationFactor = 1.0F;
+		private float PersonalizationFactor = 1.0F;
 
 		public PredictionEngine ()
 		{
@@ -180,6 +180,11 @@ namespace Di.Kdd.TextPrediction
 		public bool ValidCharacter (char character)
 		{
 			return (Trie.IsLatinLetter(character) || Trie.IsWordSeparator(character));
+		}
+
+		public void DontPersonalize()
+		{
+			this.PersonalizationFactor = 0.0f;
 		}
 
 		#endregion

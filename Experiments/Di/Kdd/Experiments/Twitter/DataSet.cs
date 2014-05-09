@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Resources;
 
 	public class DataSet
 	{
@@ -18,6 +19,14 @@
 			foreach (var userFile in this.userFiles) {
 				this.Users.Add(new User(userFile));
 
+			}
+		}
+
+		public void Reset()
+		{
+			foreach (var user in this.Users) 
+			{
+				user.Reset ();
 			}
 		}
 	}

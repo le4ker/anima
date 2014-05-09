@@ -15,6 +15,8 @@
 		private Location location;
 		string tweet;
 
+		private int tweetIndex = 0;
+
 		public Tweet(string fromString)
 		{
 			string[] tokens = fromString.Split ('|');
@@ -27,12 +29,13 @@
 
 			tokens = tokens [Tweet.TWEET_INDEX].Split (' ');
 
-			foreach (var token in tokens) {
+			this.tweet = "";
+
+			foreach (var token in tokens) 
+			{
 				if (token.StartsWith ("http:") == false && token.StartsWith ("https:") == false) {
 					this.tweet += token + " ";
-				} else {
-					Console.WriteLine (token);
-					}
+				} 
 			}
 		}
 
@@ -41,6 +44,44 @@
 			this.tweet = tweet;
 			this.time = time;
 			this.location = location;
+		}
+
+		public bool HasNext()
+		{
+			return this.tweetIndex < this.tweet.Length - 1;
+		}
+
+		public char PeekNext()
+		{
+			if (this.HasNext ()) 
+			{
+				return this.tweet [this.tweetIndex];
+			} 
+			else {
+				return '\0';
+			}
+		}		
+
+		public char ConsumeNext()
+		{
+			if (this.HasNext ()) 
+			{
+				return this.tweet [this.tweetIndex++];
+			} 
+			else 
+			{
+				return '\0';
+			}
+		}
+
+		public void Reset()
+		{
+			this.tweetIndex = 0;
+		}
+
+		public int Size() 
+		{
+			return this.tweet.Length;
 		}
 	}
 }

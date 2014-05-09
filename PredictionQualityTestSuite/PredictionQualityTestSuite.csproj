@@ -43,6 +43,7 @@
     <Compile Include="BasicScenario.cs" />
     <Compile Include="DataStream.cs" />
     <Compile Include="ExperimentScenario.cs" />
+    <Compile Include="IWriteRightStream.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

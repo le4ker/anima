@@ -43,6 +43,8 @@
     <Compile Include="Di\Kdd\Experiments\Twitter\Tweet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\DataSet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\Coordinate.cs" />
+    <Compile Include="Di\Kdd\Experiments\Baseline.cs" />
+    <Compile Include="Di\Kdd\Experiments\Baseline\BaeysianPredictionEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,6 +53,7 @@
     <Folder Include="Di\Kdd\" />
     <Folder Include="Di\Kdd\Experiments\" />
     <Folder Include="Di\Kdd\Experiments\Twitter\" />
+    <Folder Include="Di\Kdd\Experiments\Baseline\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\63251769.txt" />
@@ -63,5 +66,15 @@
     <None Include="Data\2168747747.txt" />
     <None Include="Data\2179897715.txt" />
     <None Include="Data\2234721587.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WriteRightSimulator\WriteRightSimulator.csproj">
+      <Project>{84F9833F-94AA-4A33-9F9D-CBFD2EB51FBC}</Project>
+      <Name>WriteRightSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PredictionQualityTestSuite\PredictionQualityTestSuite.csproj">
+      <Project>{48636E3E-CA4F-4625-8726-5F586285C15B}</Project>
+      <Name>PredictionQualityTestSuite</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

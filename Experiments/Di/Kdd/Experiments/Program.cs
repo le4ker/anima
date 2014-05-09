@@ -4,11 +4,13 @@
 
 	using Di.Kdd.Experiments.Twitter;
 
+	using Di.Kdd.WriteRightSimulator;
+
 	class MainClass
 	{
 		public static void Main (string[] args)
 		{
-			DataSet dataSet = new DataSet();
+			var baseline = new Baseline ();
 		}
 	}
 }

@@ -2,3 +2,9 @@
 /Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/Experiments.exe
 /Users/panos/dev/git/TextPredictionEngine/Experiments/obj/x86/Debug/Experiments.exe
 /Users/panos/dev/git/TextPredictionEngine/Experiments/obj/x86/Debug/Experiments.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/WriteRightSimulator.exe
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/WriteRightSimulator.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/PredictionQualityTestSuite.exe
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/PredictionQualityTestSuite.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/PredictionEngine.exe
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/PredictionEngine.exe.mdb

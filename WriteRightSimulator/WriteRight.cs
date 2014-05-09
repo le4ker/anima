@@ -12,7 +12,7 @@ namespace Di.Kdd.WriteRightSimulator
 	{
 		private int k = 26;
 		private int continuousSuccesses = 0;
-		private int aggresiveThreshold = 5;
+		private int aggresiveThreshold = 10;
 		private bool isIdle = false;
 
 		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
@@ -159,6 +159,11 @@ namespace Di.Kdd.WriteRightSimulator
 		public override string ToString ()
 		{
 			return this.k.ToString() + " " + this.continuousSuccesses.ToString();
+		}
+
+		public void DontPersonalize()
+		{
+			this.engine.DontPersonalize ();
 		}
 
 		#endregion
