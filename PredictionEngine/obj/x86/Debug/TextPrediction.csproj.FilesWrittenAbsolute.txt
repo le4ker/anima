@@ -1,0 +1,4 @@
+/Users/panos/dev/git/TextPredictionEngine/PredictionEngine/bin/Debug/PredictionEngine.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/PredictionEngine/bin/Debug/PredictionEngine.exe
+/Users/panos/dev/git/TextPredictionEngine/PredictionEngine/obj/x86/Debug/PredictionEngine.exe
+/Users/panos/dev/git/TextPredictionEngine/PredictionEngine/obj/x86/Debug/PredictionEngine.exe.mdb

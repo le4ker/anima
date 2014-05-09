@@ -1,0 +1,4 @@
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/Experiments.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/Experiments/bin/Debug/Experiments.exe
+/Users/panos/dev/git/TextPredictionEngine/Experiments/obj/x86/Debug/Experiments.exe
+/Users/panos/dev/git/TextPredictionEngine/Experiments/obj/x86/Debug/Experiments.exe.mdb

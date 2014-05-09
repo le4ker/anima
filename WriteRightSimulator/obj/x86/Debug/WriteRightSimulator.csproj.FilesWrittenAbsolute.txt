@@ -1,0 +1,6 @@
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/bin/Debug/WriteRightSimulator.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/bin/Debug/WriteRightSimulator.exe
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/obj/x86/Debug/WriteRightSimulator.exe
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/obj/x86/Debug/WriteRightSimulator.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/bin/Debug/PredictionEngine.exe
+/Users/panos/dev/git/TextPredictionEngine/WriteRightSimulator/bin/Debug/PredictionEngine.exe.mdb

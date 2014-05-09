@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteRightSimulator", "Writ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredictionQualityTestSuite", "PredictionQualityTestSuite\PredictionQualityTestSuite.csproj", "{48636E3E-CA4F-4625-8726-5F586285C15B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Experiments", "Experiments\Experiments.csproj", "{C5FCE261-C5FE-4DAB-AF71-F5E42CB4438A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,8 +27,12 @@ Global
 		{9822701C-BA94-4C96-847A-93729E5AD00F}.Debug|x86.Build.0 = Debug|x86
 		{9822701C-BA94-4C96-847A-93729E5AD00F}.Release|x86.ActiveCfg = Release|x86
 		{9822701C-BA94-4C96-847A-93729E5AD00F}.Release|x86.Build.0 = Release|x86
+		{C5FCE261-C5FE-4DAB-AF71-F5E42CB4438A}.Debug|x86.ActiveCfg = Debug|x86
+		{C5FCE261-C5FE-4DAB-AF71-F5E42CB4438A}.Debug|x86.Build.0 = Debug|x86
+		{C5FCE261-C5FE-4DAB-AF71-F5E42CB4438A}.Release|x86.ActiveCfg = Release|x86
+		{C5FCE261-C5FE-4DAB-AF71-F5E42CB4438A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = PredictionQualityTestSuite\PredictionQualityTestSuite.csproj
+		StartupItem = Experiments\Experiments.csproj
 	EndGlobalSection
 EndGlobal
