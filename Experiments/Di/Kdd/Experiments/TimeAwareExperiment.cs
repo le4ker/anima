@@ -5,26 +5,23 @@
 
 	using System;
 
-	public class Baseline
+	public class TimeAwareExperiment
 	{
-		public Baseline ()
-		{
-			this.BaeysianWithPersonilization ();
-		}
-			
-		public void BaeysianWithPersonilization()
+		public TimeAwareExperiment ()
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("WriteRight with personalization");
+			Console.WriteLine ("Time Aware WriteRight");
 
 			foreach (User user in dataSet.Users) 
 			{
-				var writeRight = new WriteRight();
+				var writeRight = new TimeAwareWriteRight();
 
 				while (user.HasNext ()) 
 				{
 					var ch = user.ConsumeNext ();
+
+					writeRight.SetTime (user.GetTime ());
 					writeRight.CharacterTyped (ch);
 				}
 
@@ -40,6 +37,8 @@
 				while (user.HasNext ()) 
 				{
 					var ch = user.ConsumeNext ();
+
+					writeRight.SetTime (user.GetTime ());
 
 					if (writeRight.IsWordSeparator (ch) && previousWasSeparator) 
 					{
@@ -82,7 +81,6 @@
 
 					totalChars++;
 				}
-
 
 				Console.WriteLine (user.GetId() + " [" + guessedChars + " out of " + totalChars + "] " + (float) guessedChars / (float) totalChars);
 			}

@@ -15,7 +15,7 @@ namespace Di.Kdd.WriteRightSimulator
 		private int aggresiveThreshold = 10;
 		private bool isIdle = false;
 
-		private TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
+		protected TrimmablePredictionEngine engine = new TrimmablePredictionEngine ();
 
 		public WriteRight ()
 		{

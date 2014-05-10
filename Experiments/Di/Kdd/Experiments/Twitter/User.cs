@@ -88,6 +88,11 @@
 				return '\0';
 			}
 		}
+
+		public int GetTime()
+		{
+			return this.tweets [this.tweetIndex].GetTime ();
+		}
 	}
 }
 

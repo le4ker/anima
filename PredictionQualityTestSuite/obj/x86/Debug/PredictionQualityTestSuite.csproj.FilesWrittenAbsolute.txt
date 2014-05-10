@@ -1,8 +1,8 @@
+/Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionQualityTestSuite.exe.mdb
+/Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionQualityTestSuite.exe
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/obj/x86/Debug/PredictionQualityTestSuite.exe
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/obj/x86/Debug/PredictionQualityTestSuite.exe.mdb
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/WriteRightSimulator.exe
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/WriteRightSimulator.exe.mdb
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionEngine.exe
 /Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionEngine.exe.mdb
-/Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionQualityTestSuite.exe.mdb
-/Users/panos/dev/git/TextPredictionEngine/PredictionQualityTestSuite/bin/Debug/PredictionQualityTestSuite.exe
