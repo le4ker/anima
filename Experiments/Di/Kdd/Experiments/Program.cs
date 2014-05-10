@@ -10,7 +10,7 @@
 	{
 		public static void Main (string[] args)
 		{
-			var baseline = new TimeAwareExperiment ();
+			var baseline = new Baseline ();
 		}
 	}
 }

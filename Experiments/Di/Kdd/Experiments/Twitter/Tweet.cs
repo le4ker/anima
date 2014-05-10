@@ -83,11 +83,6 @@
 		{
 			return this.tweet.Length;
 		}
-
-		public int GetTime()
-		{
-			return this.time;
-		}
 	}
 }
 

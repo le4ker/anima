@@ -22,11 +22,11 @@ namespace Di.Kdd.TextPrediction
 		private const string DataFolder = "../../Data/";
 		private const string WordsFileName = "words.txt";
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
-		private float PersonalizationFactor = 2.0F;
+		private float PersonalizationFactor = 1.0F;
 
 		public PredictionEngine ()
 		{
-			this.currentSubTrie = this.GetTrie();
+			this.currentSubTrie = this.trie;
 		}
 
 		public Boolean IsUnknownWord ()
@@ -52,11 +52,6 @@ namespace Di.Kdd.TextPrediction
 		public bool IsWordSeparator (char character)
 		{
 			return Trie.IsWordSeparator(character);
-		}
-
-		protected virtual Trie GetTrie()
-		{
-			return this.trie;
 		}
 
 		#region Public Methods
@@ -211,7 +206,7 @@ namespace Di.Kdd.TextPrediction
 				}
 
 				this.knowledge.Add(word, new StatisticsT());
-				this.GetTrie().Add(word);
+				this.trie.Add(word);
 				words++;
 			}
 
@@ -221,7 +216,7 @@ namespace Di.Kdd.TextPrediction
 		private void ResetState ()
 		{
 			this.currentWord = "";
-			this.currentSubTrie = this.GetTrie();
+			this.currentSubTrie = this.trie;
 			this.isUnknownWord = false;
 		}
 
@@ -229,7 +224,7 @@ namespace Di.Kdd.TextPrediction
 		{
 			foreach (var data in this.knowledge)
 			{
-				this.GetTrie().WasTyped(data.Key, data.Value.GetPopularity());
+				this.trie.WasTyped(data.Key, data.Value.GetPopularity());
 				this.wordsTyped += data.Value.GetPopularity();
 			}
 		}
@@ -248,11 +243,11 @@ namespace Di.Kdd.TextPrediction
 
 			if (this.isUnknownWord)
 			{
-				this.LearnNewWord(this.currentWord);
+				this.trie.Add(this.currentWord);
 			}
 			else
 			{
-				this.GetTrie().WasTyped(this.currentWord);
+				this.trie.WasTyped(this.currentWord);
 			}
 
 			this.wordsTyped++;
@@ -260,14 +255,9 @@ namespace Di.Kdd.TextPrediction
 			this.ResetState();
 		}
 
-		protected virtual void LearnNewWord(string newWord)
-		{
-			this.trie.WasTyped (newWord);
-		}
-
 		private float Evaluate (int popularity, int prefixesCounter)
 		{
-			var usageRatio = PersonalizationFactor * this.wordsTyped / this.GetTrie().Size();
+			var usageRatio = PersonalizationFactor * this.wordsTyped / this.trie.Size();
 
 			if (usageRatio > 1)
 			{
