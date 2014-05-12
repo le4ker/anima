@@ -1,13 +1,6 @@
 .DS_Store
 *.exe
 *.exe.mdb
-WriteRightSimulator/bin/Debug/writerightdb.txt
-
-PredictionEngine/bin/Debug/database.txt
-
-*.userprefs
-
-*.userprefs
 
 TextPredictionEngine.userprefs
 
