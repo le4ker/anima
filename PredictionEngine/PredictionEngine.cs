@@ -22,11 +22,12 @@ namespace Di.Kdd.TextPrediction
 		private const string DataFolder = "../../Data/";
 		private const string WordsFileName = "words.txt";
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
-		private float PersonalizationFactor = 1.0F;
+
+		private float PersonalizationFactor = 2.0F;
 
 		public PredictionEngine ()
 		{
-			this.currentSubTrie = this.trie;
+			this.currentSubTrie = this.GetTrie();
 		}
 
 		public Boolean IsUnknownWord ()
@@ -54,6 +55,16 @@ namespace Di.Kdd.TextPrediction
 			return Trie.IsWordSeparator(character);
 		}
 
+		protected virtual Trie GetTrie()
+		{
+			return this.trie;
+		}
+
+		protected virtual void LearnNewWord(string newWord)
+		{
+			this.trie.WasTyped (newWord);
+		}
+			
 		#region Public Methods
 
 		public Dictionary<char, float> GetPredictions ()
@@ -206,7 +217,7 @@ namespace Di.Kdd.TextPrediction
 				}
 
 				this.knowledge.Add(word, new StatisticsT());
-				this.trie.Add(word);
+				this.LearnNewWord(word);
 				words++;
 			}
 
@@ -216,7 +227,7 @@ namespace Di.Kdd.TextPrediction
 		private void ResetState ()
 		{
 			this.currentWord = "";
-			this.currentSubTrie = this.trie;
+			this.currentSubTrie = this.GetTrie();
 			this.isUnknownWord = false;
 		}
 
@@ -224,7 +235,7 @@ namespace Di.Kdd.TextPrediction
 		{
 			foreach (var data in this.knowledge)
 			{
-				this.trie.WasTyped(data.Key, data.Value.GetPopularity());
+				this.GetTrie().WasTyped(data.Key, data.Value.GetPopularity());
 				this.wordsTyped += data.Value.GetPopularity();
 			}
 		}
@@ -243,11 +254,11 @@ namespace Di.Kdd.TextPrediction
 
 			if (this.isUnknownWord)
 			{
-				this.trie.Add(this.currentWord);
+				this.LearnNewWord(this.currentWord);
 			}
 			else
 			{
-				this.trie.WasTyped(this.currentWord);
+				this.GetTrie().WasTyped(this.currentWord);
 			}
 
 			this.wordsTyped++;
@@ -257,7 +268,7 @@ namespace Di.Kdd.TextPrediction
 
 		private float Evaluate (int popularity, int prefixesCounter)
 		{
-			var usageRatio = PersonalizationFactor * this.wordsTyped / this.trie.Size();
+			var usageRatio = PersonalizationFactor * this.wordsTyped / this.GetTrie().Size();
 
 			if (usageRatio > 1)
 			{
@@ -270,4 +281,3 @@ namespace Di.Kdd.TextPrediction
 		#endregion
 	}
 }
-

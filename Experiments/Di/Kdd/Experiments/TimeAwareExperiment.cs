@@ -5,29 +5,30 @@
 
 	using System;
 
-	public class Baseline
+	public class TimeAwareExperiment
 	{
-		public Baseline ()
+		public TimeAwareExperiment ()
 		{
-			this.BaeysianWithPersonilization ();
+			this.run ();
 		}
-			
-		public void BaeysianWithPersonilization()
+
+		void run ()
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("WriteRight with personalization");
+			Console.WriteLine ("Time Aware WriteRight");
 
 			foreach (User user in dataSet.Users) 
 			{
-				var writeRight = new WriteRight();
+				var timeAwareWriteRight = new TimeAwareWriteRight();
 
 				/* Train the engine */
 
 				while (user.HasNext ()) 
 				{
 					var ch = user.ConsumeNext ();
-					writeRight.CharacterTyped (ch);
+					timeAwareWriteRight.SetTime (user.GetTime ());
+					timeAwareWriteRight.CharacterTyped (ch);
 				}
 
 				user.Reset ();
@@ -38,24 +39,26 @@
 				while (user.HasNext ()) 
 				{
 					var ch = user.ConsumeNext ();
-					writeRight.CharacterTyped (ch);
+					timeAwareWriteRight.SetTime (user.GetTime ());
+					timeAwareWriteRight.CharacterTyped (ch);
 
 					var next = user.PeekNext ();
-					var predictions = writeRight.GetTopKPredictions ();
+					timeAwareWriteRight.SetTime (user.PeekNextTime ());
+					var predictions = timeAwareWriteRight.GetTopKPredictions ();
 
-					if (writeRight.IsValidCharacter (next) == false || 
-						writeRight.IsWordSeparator (next) || 
-						writeRight.IsIdle ()) 
+					if (timeAwareWriteRight.IsValidCharacter (next) == false || 
+						timeAwareWriteRight.IsWordSeparator (next) || 
+						timeAwareWriteRight.IsIdle ()) 
 					{
 						continue;
 					}
 
 					if (predictions.ContainsKey (next) == false)
 					{
-						writeRight.BadPrediction ();
+						timeAwareWriteRight.BadPrediction ();
 						totalChars++;
 					} 
-					else if (writeRight.IsWordSeparator (next) == false) 
+					else if (timeAwareWriteRight.IsWordSeparator (next) == false) 
 					{
 						guessedChars++;
 						totalChars++;
@@ -70,4 +73,3 @@
 		}
 	}
 }
-

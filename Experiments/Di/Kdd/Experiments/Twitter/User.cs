@@ -62,10 +62,17 @@
 
 		public char PeekNext()
 		{
-			if (this.HasNext())
+			if (this.HasNext ()) 
 			{
-				return this.tweets[this.tweetIndex].PeekNext ();
-			}
+
+				if (this.tweets [this.tweetIndex].HasNext ()) {
+					return this.tweets [this.tweetIndex].PeekNext ();
+				} 
+				else 
+				{
+					return this.tweets [this.tweetIndex + 1].PeekNext ();
+				}
+			} 
 			else
 			{
 				return '\0';
@@ -88,6 +95,29 @@
 				return '\0';
 			}
 		}
+
+		public int PeekNextTime()
+		{
+			if (this.HasNext ()) 
+			{
+				if (this.tweets [this.tweetIndex].HasNext ()) 
+				{
+					return this.tweets [this.tweetIndex].GetTime ();
+				} 
+				else 
+				{
+					return this.tweets [this.tweetIndex + 1].GetTime ();
+				}
+			} 
+			else
+			{
+				return '\0';
+			}
+		}
+
+		public int GetTime()
+		{
+			return this.tweets [this.tweetIndex].GetTime ();
+		}
 	}
 }
-

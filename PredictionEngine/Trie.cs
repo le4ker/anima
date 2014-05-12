@@ -7,7 +7,7 @@ namespace Di.Kdd.TextPrediction
 	public class Trie
 	{
 		public static string LatinLetters = "abcdefghijklmnopqrstuvwxyz";
-		public static string WordSeparators = " .,!";
+		public static string WordSeparators = " ,./?\\|';:]}[{+=_-)0(9*8&7^6%5$4#3@2!1";
 
 		private int size = 1;
 		private int popularity = 0;
