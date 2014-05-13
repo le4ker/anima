@@ -48,6 +48,7 @@
     <Compile Include="Di\Kdd\Experiments\TimeAwareWriteRight.cs" />
     <Compile Include="Di\Kdd\Experiments\TimeAwareExperiment.cs" />
     <Compile Include="Di\Kdd\Experiments\DictionaryExperiment.cs" />
+    <Compile Include="Di\Kdd\Experiments\DictionaryWithPersonalization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

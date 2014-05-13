@@ -13,6 +13,7 @@
 			float trainSetPercentage = 0.7f;
 
 			new DictionaryExperiment (trainSetPercentage);
+			new DictionaryWithPersonalization (trainSetPercentage);
 			new TimeAwareExperiment (trainSetPercentage);
 		}
 	}

@@ -5,13 +5,13 @@
 
 	using System;
 
-	public class DictionaryExperiment
+	public class DictionaryWithPersonalization
 	{
-		public DictionaryExperiment (float trainSetPercentage)
+		public DictionaryWithPersonalization (float trainSetPercentage)
 		{
 			this.run (trainSetPercentage);
 		}
-			
+
 		public void run(float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
@@ -21,7 +21,6 @@
 			foreach (User user in dataSet.Users) 
 			{
 				var writeRight = new WriteRight();
-				writeRight.DontPersonalize ();
 				writeRight.LoadDB ("dummy");
 
 				/* Train the engine */
@@ -67,7 +66,7 @@
 				}
 
 				Console.WriteLine (user.GetId() + " [" + guessedChars + " out of " + totalChars + "] " + 
-																(float) guessedChars / (float) totalChars);
+					(float) guessedChars / (float) totalChars);
 			}
 
 			dataSet.Reset ();
