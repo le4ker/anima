@@ -7,12 +7,12 @@
 
 	public class TimeAwareExperiment
 	{
-		public TimeAwareExperiment ()
+		public TimeAwareExperiment (float trainSetPercentage)
 		{
-			this.run ();
+			this.run (trainSetPercentage);
 		}
 
-		void run ()
+		void run (float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
 
@@ -24,26 +24,28 @@
 
 				/* Train the engine */
 
-				while (user.HasNext ()) 
+				User trainSet = user.GetTrainSet (trainSetPercentage);
+
+				while (trainSet.HasNext ()) 
 				{
-					var ch = user.ConsumeNext ();
-					timeAwareWriteRight.SetTime (user.GetTime ());
+					var ch = trainSet.ConsumeNext ();
+					timeAwareWriteRight.SetTime (trainSet.GetTime ());
 					timeAwareWriteRight.CharacterTyped (ch);
 				}
 
-				user.Reset ();
+				User testSet = user.GetTestSet ();
 
 				var totalChars = 0;
 				var guessedChars = 0;
 
-				while (user.HasNext ()) 
+				while (testSet.HasNext ()) 
 				{
-					var ch = user.ConsumeNext ();
-					timeAwareWriteRight.SetTime (user.GetTime ());
+					var ch = testSet.ConsumeNext ();
+					timeAwareWriteRight.SetTime (testSet.GetTime ());
 					timeAwareWriteRight.CharacterTyped (ch);
 
-					var next = user.PeekNext ();
-					timeAwareWriteRight.SetTime (user.PeekNextTime ());
+					var next = testSet.PeekNext ();
+					timeAwareWriteRight.SetTime (testSet.PeekNextTime ());
 					var predictions = timeAwareWriteRight.GetTopKPredictions ();
 
 					if (timeAwareWriteRight.IsValidCharacter (next) == false || 

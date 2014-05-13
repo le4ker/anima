@@ -13,6 +13,8 @@
 
 		private int tweetIndex = 0;
 
+		public User() { }
+
 		public User (string dataFile)
 		{
 			if (File.Exists(DataFolder + dataFile) == false)
@@ -31,6 +33,41 @@
 					this.tweets.Add(new Tweet(line));
 				}
 			}
+		}
+
+		private int testSetIndex;
+
+		public User GetTrainSet(float percentage)
+		{
+			User trainSet = new User ();
+
+			int i;
+
+			for (i = 0; i < this.tweets.Count * percentage; i++) 
+			{
+				trainSet.AddTweet (this.tweets[i]);
+			}
+
+			this.testSetIndex = i;
+
+			return trainSet;
+		}
+
+		public User GetTestSet()
+		{
+			User testSet = new User ();
+
+			for (int i = this.testSetIndex; i < this.tweets.Count; i++) 
+			{
+				testSet.AddTweet (this.tweets[i]);
+			}
+
+			return testSet;
+		}
+
+		private void AddTweet(Tweet tweet)
+		{
+			this.tweets.Add (tweet);
 		}
 
 		public string GetId()

@@ -23,7 +23,7 @@ namespace Di.Kdd.TextPrediction
 		private const string WordsFileName = "words.txt";
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
 
-		private float PersonalizationFactor = 2.0F;
+		private float PersonalizationFactor = 1.0F;
 
 		public PredictionEngine ()
 		{

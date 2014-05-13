@@ -7,10 +7,10 @@ namespace Di.Kdd.WriteRightSimulator
 
 	public class TimeAwarePredictionEngine :TrimmablePredictionEngine
 	{
-		private const int TIME_PARTITIONS = 5;
+		private const int TIME_PARTITIONS = 2;
 
 		private int currentHour = 0;
-		private Trie []timeTries = new Trie[] {new Trie(), new Trie(), new Trie(), new Trie(), new Trie() };
+		private Trie []timeTries = new Trie[] {new Trie(), new Trie(), new Trie(), new Trie(), new Trie(), new Trie() };
 
 		public void SetTime(int hour)
 		{

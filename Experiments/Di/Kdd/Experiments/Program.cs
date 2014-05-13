@@ -10,8 +10,10 @@
 	{
 		public static void Main (string[] args)
 		{
-			//			new Baseline ();
-			new TimeAwareExperiment ();
+			float trainSetPercentage = 0.9f;
+
+			new Baseline (trainSetPercentage);
+			new TimeAwareExperiment (trainSetPercentage);
 		}
 	}
 }

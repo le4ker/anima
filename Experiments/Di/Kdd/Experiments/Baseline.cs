@@ -7,12 +7,12 @@
 
 	public class Baseline
 	{
-		public Baseline ()
+		public Baseline (float trainSetPercentage)
 		{
-			this.BaeysianWithPersonilization ();
+			this.BaeysianWithPersonilization (trainSetPercentage);
 		}
 			
-		public void BaeysianWithPersonilization()
+		public void BaeysianWithPersonilization(float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
 
@@ -24,23 +24,25 @@
 
 				/* Train the engine */
 
-				while (user.HasNext ()) 
+				User trainSet = user.GetTrainSet (trainSetPercentage);
+
+				while (trainSet.HasNext ()) 
 				{
-					var ch = user.ConsumeNext ();
+					var ch = trainSet.ConsumeNext ();
 					writeRight.CharacterTyped (ch);
 				}
 
-				user.Reset ();
+				User testSet = user.GetTestSet ();
 
 				var totalChars = 0;
 				var guessedChars = 0;
 
-				while (user.HasNext ()) 
+				while (testSet.HasNext ()) 
 				{
-					var ch = user.ConsumeNext ();
+					var ch = testSet.ConsumeNext ();
 					writeRight.CharacterTyped (ch);
 
-					var next = user.PeekNext ();
+					var next = testSet.PeekNext ();
 					var predictions = writeRight.GetTopKPredictions ();
 
 					if (writeRight.IsValidCharacter (next) == false || 
