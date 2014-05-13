@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Experiments
+﻿namespace Di.Kdd.Experiments
 {
+	using System;
+
 	public class ExperimentEvaluation
 	{
 		private float score;

@@ -24,6 +24,8 @@
 				writeRight.DontPersonalize ();
 				writeRight.LoadDB ("dummy");
 
+				var evaluation = new ExperimentEvaluation ();
+
 				/* Train the engine */
 
 				User trainSet = user.GetTrainSet (trainSetPercentage);
@@ -58,11 +60,15 @@
 					{
 						writeRight.BadPrediction ();
 						totalChars++;
+
+						evaluation.Miss ();
 					} 
 					else if (writeRight.IsWordSeparator (next) == false) 
 					{
 						guessedChars++;
 						totalChars++;
+
+						evaluation.Hit (predictions.Count);
 					}
 				}
 

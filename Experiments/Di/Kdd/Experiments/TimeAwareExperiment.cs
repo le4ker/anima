@@ -23,6 +23,8 @@
 				var timeAwareWriteRight = new TimeAwareWriteRight(2);
 				timeAwareWriteRight.LoadDB ("dummy");
 
+				var evaluation = new ExperimentEvaluation ();
+
 				/* Train the engine */
 
 				User trainSet = user.GetTrainSet (trainSetPercentage);
@@ -60,11 +62,15 @@
 					{
 						timeAwareWriteRight.BadPrediction ();
 						totalChars++;
+
+						evaluation.Miss ();
 					} 
 					else if (timeAwareWriteRight.IsWordSeparator (next) == false) 
 					{
 						guessedChars++;
 						totalChars++;
+
+						evaluation.Hit (predictions.Count);
 					}
 				}
 
