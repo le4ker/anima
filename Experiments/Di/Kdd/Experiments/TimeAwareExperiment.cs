@@ -9,18 +9,21 @@
 	{
 		public TimeAwareExperiment (float trainSetPercentage)
 		{
-			this.run (trainSetPercentage);
+			for (int i = 2; i < 6; i++) 
+			{
+				this.run (i, trainSetPercentage);
+			}
 		}
 
-		void run (float trainSetPercentage)
+		void run (int timePartitions, float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("Time Aware WriteRight");
+			Console.WriteLine ("Time Aware WriteRight (" + timePartitions + " time partitions");
 
 			foreach (User user in dataSet.Users) 
 			{
-				var timeAwareWriteRight = new TimeAwareWriteRight(2);
+				var timeAwareWriteRight = new TimeAwareWriteRight(timePartitions);
 				timeAwareWriteRight.LoadDB ("dummy");
 
 				var evaluation = new ExperimentEvaluation ();
