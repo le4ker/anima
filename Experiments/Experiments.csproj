@@ -43,11 +43,11 @@
     <Compile Include="Di\Kdd\Experiments\Twitter\Tweet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\DataSet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\Coordinate.cs" />
-    <Compile Include="Di\Kdd\Experiments\Baseline.cs" />
     <Compile Include="Di\Kdd\Experiments\Baseline\BaeysianPredictionEngine.cs" />
     <Compile Include="Di\Kdd\TimeAwarePredictionEngine.cs" />
     <Compile Include="Di\Kdd\Experiments\TimeAwareWriteRight.cs" />
     <Compile Include="Di\Kdd\Experiments\TimeAwareExperiment.cs" />
+    <Compile Include="Di\Kdd\Experiments\DictionaryExperiment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

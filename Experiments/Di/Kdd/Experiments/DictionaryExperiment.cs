@@ -5,9 +5,9 @@
 
 	using System;
 
-	public class Baseline
+	public class DictionaryExperiment
 	{
-		public Baseline (float trainSetPercentage)
+		public DictionaryExperiment (float trainSetPercentage)
 		{
 			this.BaeysianWithPersonilization (trainSetPercentage);
 		}
@@ -21,6 +21,8 @@
 			foreach (User user in dataSet.Users) 
 			{
 				var writeRight = new WriteRight();
+				writeRight.DontPersonalize ();
+				writeRight.LoadDB ("dummy");
 
 				/* Train the engine */
 

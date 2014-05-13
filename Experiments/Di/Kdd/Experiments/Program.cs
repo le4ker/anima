@@ -10,9 +10,9 @@
 	{
 		public static void Main (string[] args)
 		{
-			float trainSetPercentage = 0.9f;
+			float trainSetPercentage = 0.7f;
 
-			new Baseline (trainSetPercentage);
+			new DictionaryExperiment (trainSetPercentage);
 			new TimeAwareExperiment (trainSetPercentage);
 		}
 	}
