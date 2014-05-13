@@ -1,5 +1,6 @@
 ﻿using Di.Kdd.TextPrediction;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Di.Kdd.WriteRightSimulator
 {
@@ -7,10 +8,15 @@ namespace Di.Kdd.WriteRightSimulator
 
 	public class TimeAwarePredictionEngine :TrimmablePredictionEngine
 	{
-		private const int TIME_PARTITIONS = 2;
-
 		private int currentHour = 0;
+
+		private int timePartitions = 2;
 		private Trie []timeTries = new Trie[] {new Trie(), new Trie(), new Trie(), new Trie(), new Trie(), new Trie() };
+
+		public TimeAwarePredictionEngine(int timePartitions)
+		{
+			this.timePartitions = timePartitions;
+		}
 
 		public void SetTime(int hour)
 		{
@@ -19,7 +25,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 		protected override Trie GetTrie ()
 		{
-			int nowTrie = this.currentHour * TimeAwarePredictionEngine.TIME_PARTITIONS / 24;
+			int nowTrie = this.currentHour * this.timePartitions / 24;
 			return timeTries [nowTrie];
 		}
 

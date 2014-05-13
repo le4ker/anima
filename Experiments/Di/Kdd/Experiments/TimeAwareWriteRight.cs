@@ -6,9 +6,9 @@
 
 	public class TimeAwareWriteRight : WriteRight
 	{
-		public TimeAwareWriteRight ()
+		public TimeAwareWriteRight (int timePartitions)
 		{
-			this.engine = new TimeAwarePredictionEngine ();
+			this.engine = new TimeAwarePredictionEngine (timePartitions);
 		}
 
 		public void SetTime(int hour)

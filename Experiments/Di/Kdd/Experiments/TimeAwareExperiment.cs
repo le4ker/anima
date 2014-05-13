@@ -20,7 +20,7 @@
 
 			foreach (User user in dataSet.Users) 
 			{
-				var timeAwareWriteRight = new TimeAwareWriteRight();
+				var timeAwareWriteRight = new TimeAwareWriteRight(2);
 
 				/* Train the engine */
 
