@@ -76,6 +76,7 @@
 
 				Console.WriteLine (user.GetId() + " [" + guessedChars + " out of " + totalChars + "] " + 
 																(float) guessedChars / (float) totalChars);
+				Console.WriteLine ("Evaluation score: " + evaluation.GetScore ());
 			}
 
 			dataSet.Reset ();
