@@ -83,5 +83,6 @@
     <None Include="Data\2168747747.txt" />
     <None Include="Data\2179897715.txt" />
     <None Include="Data\2234721587.txt" />
+    <None Include="Data\words.txt" />
   </ItemGroup>
 </Project>
