@@ -16,7 +16,7 @@
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("WriteRight with Dictionary");
+			Console.WriteLine ("WriteRight with Dictionary and Personalization");
 
 			foreach (User user in dataSet.Users) 
 			{

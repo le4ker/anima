@@ -21,6 +21,7 @@
 			foreach (User user in dataSet.Users) 
 			{
 				var timeAwareWriteRight = new TimeAwareWriteRight(2);
+				timeAwareWriteRight.LoadDB ("dummy");
 
 				/* Train the engine */
 
