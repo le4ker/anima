@@ -9,7 +9,7 @@
 
 		public void Hit(int predictionSetSize)
 		{
-			this.score += 1 / predictionSetSize;
+			this.score += (float) 1 / predictionSetSize;
 			this.hits++;
 		}
 
