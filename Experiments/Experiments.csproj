@@ -43,7 +43,6 @@
     <Compile Include="Di\Kdd\Experiments\Twitter\Tweet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\DataSet.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\Coordinate.cs" />
-    <Compile Include="Di\Kdd\Experiments\Baseline\BaeysianPredictionEngine.cs" />
     <Compile Include="Di\Kdd\Experiments\TimeAwareExperiment.cs" />
     <Compile Include="Di\Kdd\Experiments\DictionaryExperiment.cs" />
     <Compile Include="Di\Kdd\Experiments\DictionaryWithPersonalization.cs" />
@@ -58,7 +57,6 @@
     <Folder Include="Di\Kdd\" />
     <Folder Include="Di\Kdd\Experiments\" />
     <Folder Include="Di\Kdd\Experiments\Twitter\" />
-    <Folder Include="Di\Kdd\Experiments\Baseline\" />
     <Folder Include="Di\Kdd\Time\" />
   </ItemGroup>
   <ItemGroup>
