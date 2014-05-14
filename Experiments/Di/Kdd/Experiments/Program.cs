@@ -15,6 +15,7 @@
 			new DictionaryExperiment (trainSetPercentage);
 			new DictionaryWithPersonalization (trainSetPercentage);
 			new TimeAwareExperiment (trainSetPercentage);
+			new FaultyTimeExperiment (trainSetPercentage);
 		}
 	}
 }

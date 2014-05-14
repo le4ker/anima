@@ -49,6 +49,7 @@
     <Compile Include="Di\Kdd\Time\TimeAwareWriteRight.cs" />
     <Compile Include="Di\Kdd\Time\TimeAwarePredictionEngine.cs" />
     <Compile Include="Di\Kdd\Experiments\ExperimentEvaluation.cs" />
+    <Compile Include="Di\Kdd\Experiments\FaultyTimeExperiment.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

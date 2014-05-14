@@ -9,7 +9,7 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 10000;
+		private int wordsSize = 1000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
@@ -23,7 +23,7 @@ namespace Di.Kdd.TextPrediction
 		private const string WordsFileName = "words.txt";
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
 
-		private float PersonalizationFactor = 1.0F;
+		private float PersonalizationFactor = 2.0F;
 
 		public PredictionEngine ()
 		{
