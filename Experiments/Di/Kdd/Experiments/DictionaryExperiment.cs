@@ -30,6 +30,8 @@ namespace Di.Kdd.Experiments
 		{
 			var dataSet = new DataSet ();
 
+			Console.WriteLine ("WriteRight with Dictionary");
+
 			foreach (User user in dataSet.Users) 
 			{
 				var writeRight = new WriteRight();
