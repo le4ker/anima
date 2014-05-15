@@ -6,8 +6,6 @@
 
 	public class User
 	{
-		private const string DataFolder = "../../Data/";
-
 		private string id;
 		private List<Tweet> tweets = new List<Tweet>();
 
@@ -17,16 +15,16 @@
 
 		public User (string dataFile)
 		{
-			if (File.Exists(DataFolder + dataFile) == false)
+			if (File.Exists(dataFile) == false)
 			{
-				throw new IOException(DataFolder + dataFile);
+				throw new IOException(dataFile);
 			}
 
 			this.id = dataFile;
 
 			var line = "";
 
-			using (var reader = new StreamReader(File.OpenRead(DataFolder + dataFile)))
+			using (var reader = new StreamReader(File.OpenRead(dataFile)))
 			{
 				while ((line = reader.ReadLine()) != null)
 				{

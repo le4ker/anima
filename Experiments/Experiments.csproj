@@ -75,16 +75,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\63251769.txt" />
-    <None Include="Data\214204613.txt" />
-    <None Include="Data\265441754.txt" />
-    <None Include="Data\271027125.txt" />
-    <None Include="Data\324386374.txt" />
-    <None Include="Data\941839460.txt" />
-    <None Include="Data\1833919200.txt" />
-    <None Include="Data\2168747747.txt" />
-    <None Include="Data\2179897715.txt" />
-    <None Include="Data\2234721587.txt" />
     <None Include="Data\words.txt" />
   </ItemGroup>
 </Project>
