@@ -1,4 +1,6 @@
-﻿namespace Di.Kdd.Experiments
+﻿using System.IO;
+
+namespace Di.Kdd.Experiments
 {
 	using Di.Kdd.Experiments.Twitter;
 	using Di.Kdd.WriteRightSimulator;
@@ -7,16 +9,26 @@
 
 	public class DictionaryExperiment
 	{
+		private  string hitRatioFile = "dic_hitratio.txt";
+		private  string evalFile = "dic_eval.txt";
+
+		private  TextWriter hitRatioWriter;
+		private  TextWriter evalWriter;
+
 		public DictionaryExperiment (float trainSetPercentage)
 		{
+			this.hitRatioWriter = new StreamWriter(File.Create (hitRatioFile));
+			this.evalWriter = new StreamWriter(File.Create (evalFile));
+
 			this.run (trainSetPercentage);
+
+			this.hitRatioWriter.Close ();
+			this.evalWriter.Close ();
 		}
 			
 		public void run(float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
-
-			Console.WriteLine ("WriteRight with Dictionary");
 
 			foreach (User user in dataSet.Users) 
 			{
@@ -72,9 +84,13 @@
 					}
 				}
 
-				Console.WriteLine (user.GetId() + " [" + guessedChars + " out of " + totalChars + "] " + 
-																(float) guessedChars / (float) totalChars);
-				Console.WriteLine ("Evaluation score: " + evaluation.GetScore ());
+				this.hitRatioWriter.WriteLine ((float) guessedChars / (float) totalChars + " " );
+				this.evalWriter.WriteLine (evaluation.GetScore () + " ");
+
+				this.hitRatioWriter.Flush ();
+				this.evalWriter.Flush ();
+
+				Console.WriteLine(user.GetId ());
 			}
 
 			dataSet.Reset ();

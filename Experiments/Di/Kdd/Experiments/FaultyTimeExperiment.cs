@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.IO;
 
 namespace Di.Kdd.Experiments
 {
@@ -11,11 +12,23 @@ namespace Di.Kdd.Experiments
 	{
 		Random random = new Random();
 
+		private  string hitRatioFile = "falsetime_hitratio.txt";
+		private  string evalFile = "falsetime_eval.txt";
+
+		private  TextWriter hitRatioWriter;
+		private  TextWriter evalWriter;
+
 		public FaultyTimeExperiment (float trainSetPercentage)
 		{
 			for (int i = 2; i < 6; i++) 
 			{
+				this.hitRatioWriter = new StreamWriter(File.Create (i + hitRatioFile));
+				this.evalWriter = new StreamWriter(File.Create (i + evalFile));
+
 				this.run (i, trainSetPercentage);
+
+				this.hitRatioWriter.Close ();
+				this.evalWriter.Close ();
 			}
 		}
 
@@ -81,9 +94,13 @@ namespace Di.Kdd.Experiments
 					}
 				}
 
-				Console.WriteLine (user.GetId() + " [" + guessedChars + " out of " + totalChars + "] " + 
-					(float) guessedChars / (float) totalChars);
-				Console.WriteLine ("Evaluation score: " + evaluation.GetScore ());
+				this.hitRatioWriter.WriteLine ((float) guessedChars / (float) totalChars + " " );
+				this.evalWriter.WriteLine (evaluation.GetScore () + " ");
+
+				this.hitRatioWriter.Flush ();
+				this.evalWriter.Flush ();
+
+				Console.WriteLine(user.GetId ());
 			}
 
 			dataSet.Reset ();
