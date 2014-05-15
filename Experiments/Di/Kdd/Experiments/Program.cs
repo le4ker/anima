@@ -10,7 +10,7 @@
 	{
 		public static void Main (string[] args)
 		{
-			float trainSetPercentage = 0.7f;
+			float trainSetPercentage = 0.9f;
 
 			new DictionaryExperiment (trainSetPercentage);
 			new DictionaryWithPersonalization (trainSetPercentage);
