@@ -6,7 +6,7 @@
 
 	public class TimeAwareWriteRight : WriteRight
 	{
-		public TimeAwareWriteRight (int timePartitions)
+		public TimeAwareWriteRight (int k, int timePartitions) : base(k)
 		{
 			this.engine = new TimeAwarePredictionEngine (timePartitions);
 		}

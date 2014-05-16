@@ -5,3 +5,5 @@
 TextPredictionEngine.userprefs
 
 *.userprefs
+
+Experiments/bin/Debug/*

@@ -12,10 +12,12 @@
 		{
 			float trainSetPercentage = 0.9f;
 
-			new DictionaryExperiment (trainSetPercentage);
-			new DictionaryWithPersonalization (trainSetPercentage);
-			new TimeAwareExperiment (trainSetPercentage);
-			new FaultyTimeExperiment (trainSetPercentage);
+			for (int k = 1; k < 6; k++) {
+				new DictionaryExperiment (k, trainSetPercentage);
+				new DictionaryWithPersonalization (k, trainSetPercentage);
+				new TimeAwareExperiment (k, trainSetPercentage);
+				new FaultyTimeExperiment (k, trainSetPercentage);
+			}
 		}
 	}
 }

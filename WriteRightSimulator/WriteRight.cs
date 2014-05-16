@@ -18,6 +18,12 @@ namespace Di.Kdd.WriteRightSimulator
 
 		protected TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
 
+		public WriteRight (int k)
+		{
+			this.k = k;
+			Trie.SetWordSeparators(" .,;:!?\n()[]*&@{}<>/-_+=|%#©~$'`\"0123456789");
+		}
+
 		public WriteRight ()
 		{
 			Trie.SetWordSeparators(" .,;:!?\n()[]*&@{}<>/-_+=|%#©~$'`\"0123456789");
@@ -94,7 +100,7 @@ namespace Di.Kdd.WriteRightSimulator
 		}
 
 		public Dictionary<char, float> GetTopKPredictions ()
-		{
+		{																														// TODO
 			return this.isIdle ? null : this.engine.GetPredictions().Where(x => x.Value > 0.0F).OrderByDescending(x => x.Value).Take(this.k).ToDictionary(x => x.Key, x => x.Value);
 		}
 
@@ -102,7 +108,7 @@ namespace Di.Kdd.WriteRightSimulator
 		{
 			if (this.k < 26)
 			{
-				this.k++;
+				//				this.k++;
 			}
 
 			this.continuousSuccesses = 0;
@@ -182,7 +188,7 @@ namespace Di.Kdd.WriteRightSimulator
 
 				if (k > 1)
 				{
-					k--;
+					//					k--;
 				}
 			}
 		}

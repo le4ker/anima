@@ -15,26 +15,29 @@ namespace Di.Kdd.Experiments
 		private  TextWriter hitRatioWriter;
 		private  TextWriter evalWriter;
 
-		public DictionaryWithPersonalization (float trainSetPercentage)
+		public DictionaryWithPersonalization (int k, float trainSetPercentage)
 		{
-			this.hitRatioWriter = new StreamWriter(File.Create (hitRatioFile));
-			this.evalWriter = new StreamWriter(File.Create (evalFile));
+			this.hitRatioWriter = new StreamWriter(File.Create ("k" + k + hitRatioFile));
+			this.evalWriter = new StreamWriter(File.Create ("k" + k + evalFile));
 
-			this.run (trainSetPercentage);
+			this.run (k, trainSetPercentage);
 
 			this.hitRatioWriter.Close ();
 			this.evalWriter.Close ();
 		}
 
-		public void run(float trainSetPercentage)
+		public void run(int k, float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
 
 			Console.WriteLine ("WriteRight with Dictionary and Personalization");
 
+			float hitRatio = 0.0f;
+			float evaluationScore = 0.0f;
+
 			foreach (User user in dataSet.Users) 
 			{
-				var writeRight = new WriteRight();
+				var writeRight = new WriteRight(k);
 				writeRight.LoadDB ("dummy");
 
 				var evaluation = new ExperimentEvaluation ();
@@ -85,14 +88,17 @@ namespace Di.Kdd.Experiments
 					}
 				}
 
-				this.hitRatioWriter.WriteLine ((float) guessedChars / (float) totalChars + " " );
-				this.evalWriter.WriteLine (evaluation.GetScore () + " ");
-
-				this.hitRatioWriter.Flush ();
-				this.evalWriter.Flush ();
+				hitRatio += (float)guessedChars / (float)totalChars;
+				evaluationScore += evaluation.GetScore ();
 
 				Console.WriteLine(user.GetId ());
 			}
+
+			this.hitRatioWriter.WriteLine (hitRatio / dataSet.Users.Count);
+			this.evalWriter.WriteLine (evaluationScore / dataSet.Users.Count);
+
+			this.hitRatioWriter.Flush ();
+			this.evalWriter.Flush ();
 
 			dataSet.Reset ();
 		}

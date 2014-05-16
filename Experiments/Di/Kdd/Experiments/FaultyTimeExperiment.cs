@@ -18,29 +18,32 @@ namespace Di.Kdd.Experiments
 		private  TextWriter hitRatioWriter;
 		private  TextWriter evalWriter;
 
-		public FaultyTimeExperiment (float trainSetPercentage)
+		public FaultyTimeExperiment (int k, float trainSetPercentage)
 		{
-			for (int i = 2; i < 6; i++) 
+			for (int i = 2; i <= 6; i++) 
 			{
-				this.hitRatioWriter = new StreamWriter(File.Create (i + hitRatioFile));
-				this.evalWriter = new StreamWriter(File.Create (i + evalFile));
+				this.hitRatioWriter = new StreamWriter(File.Create ("k" + k + "t" + i + hitRatioFile));
+				this.evalWriter = new StreamWriter(File.Create ("k" + k + "t" + i + evalFile));
 
-				this.run (i, trainSetPercentage);
+				this.run (k, i, trainSetPercentage);
 
 				this.hitRatioWriter.Close ();
 				this.evalWriter.Close ();
 			}
 		}
 
-		void run (int timePartitions, float trainSetPercentage)
+		void run (int k, int timePartitions, float trainSetPercentage)
 		{
 			var dataSet = new DataSet ();
 
 			Console.WriteLine ("(Faulty) Time Aware WriteRight (" + timePartitions + " time partitions");
 
+			float hitRatio = 0.0f;
+			float evaluationScore = 0.0f;
+
 			foreach (User user in dataSet.Users) 
 			{
-				var timeAwareWriteRight = new TimeAwareWriteRight(timePartitions);
+				var timeAwareWriteRight = new TimeAwareWriteRight(k, timePartitions);
 				timeAwareWriteRight.LoadDB ("dummy");
 
 				var evaluation = new ExperimentEvaluation ();
@@ -51,8 +54,8 @@ namespace Di.Kdd.Experiments
 
 				while (trainSet.HasNext ()) 
 				{
-					var ch = trainSet.ConsumeNext ();
-					timeAwareWriteRight.SetTime (this.random.Next () % timePartitions);
+					var ch = trainSet.ConsumeNext ();	
+					timeAwareWriteRight.SetTime (this.random.Next () % 24);
 					timeAwareWriteRight.CharacterTyped (ch);
 				}
 
@@ -68,7 +71,7 @@ namespace Di.Kdd.Experiments
 					timeAwareWriteRight.CharacterTyped (ch);
 
 					var next = testSet.PeekNext ();
-					timeAwareWriteRight.SetTime (this.random.Next () % timePartitions);
+					timeAwareWriteRight.SetTime (this.random.Next () % 24);
 					var predictions = timeAwareWriteRight.GetTopKPredictions ();
 
 					if (timeAwareWriteRight.IsValidCharacter (next) == false || 
@@ -94,14 +97,17 @@ namespace Di.Kdd.Experiments
 					}
 				}
 
-				this.hitRatioWriter.WriteLine ((float) guessedChars / (float) totalChars + " " );
-				this.evalWriter.WriteLine (evaluation.GetScore () + " ");
-
-				this.hitRatioWriter.Flush ();
-				this.evalWriter.Flush ();
+				hitRatio += (float)guessedChars / (float)totalChars;
+				evaluationScore += evaluation.GetScore ();
 
 				Console.WriteLine(user.GetId ());
 			}
+
+			this.hitRatioWriter.WriteLine (hitRatio / dataSet.Users.Count);
+			this.evalWriter.WriteLine (evaluationScore / dataSet.Users.Count);
+
+			this.hitRatioWriter.Flush ();
+			this.evalWriter.Flush ();
 
 			dataSet.Reset ();
 		}
