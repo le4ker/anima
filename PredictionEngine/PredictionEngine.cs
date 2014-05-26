@@ -9,7 +9,7 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 5000;
+		private int wordsSize = 10000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
@@ -24,6 +24,8 @@ namespace Di.Kdd.TextPrediction
 		private const string DbEndTrail = "±±±±±±±±±±±±±±";
 
 		private float PersonalizationFactor = 100.0F;
+
+		private bool inTestMode = false; 
 
 		public PredictionEngine ()
 		{
@@ -66,6 +68,11 @@ namespace Di.Kdd.TextPrediction
 		}
 			
 		#region Public Methods
+
+		public void testMode()
+		{
+			this.inTestMode = true;
+		}
 
 		public Dictionary<char, float> GetPredictions ()
 		{
@@ -242,26 +249,23 @@ namespace Di.Kdd.TextPrediction
 
 		private void WordTyped ()
 		{
-			if (this.knowledge.ContainsKey(this.currentWord) == false)
+			if (!this.inTestMode) 
 			{
-				var statistics = new StatisticsT();
-				this.knowledge.Add(this.currentWord, statistics);
-			}
-			else
-			{
-				this.knowledge[this.currentWord].WordTyped();
-			}
+				if (this.knowledge.ContainsKey (this.currentWord) == false) {
+					var statistics = new StatisticsT ();
+					this.knowledge.Add (this.currentWord, statistics);
+				} else {
+					this.knowledge [this.currentWord].WordTyped ();
+				}
 
-			if (this.isUnknownWord)
-			{
-				this.LearnNewWord(this.currentWord);
-			}
-			else
-			{
-				this.GetTrie().WasTyped(this.currentWord);
-			}
+				if (this.isUnknownWord) {
+					this.LearnNewWord (this.currentWord);
+				} else {
+					this.GetTrie ().WasTyped (this.currentWord);
+				}
 
-			this.wordsTyped++;
+				this.wordsTyped++;
+			}
 
 			this.ResetState();
 		}

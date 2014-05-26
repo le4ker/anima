@@ -1,5 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using System.IO;
+﻿using System.IO;
+using System.Globalization;
 
 namespace Di.Kdd.Experiments
 {
@@ -10,85 +10,71 @@ namespace Di.Kdd.Experiments
 
 	public class FaultyTimeExperiment
 	{
+		int k;
 		Random random = new Random();
 
-		private  string hitRatioFile = "falsetime_hitratio.txt";
-		private  string evalFile = "falsetime_eval.txt";
-
-		private  TextWriter hitRatioWriter;
-		private  TextWriter evalWriter;
-
-		public FaultyTimeExperiment (int k, float trainSetPercentage)
+		public FaultyTimeExperiment (int k)
 		{
-			for (int i = 2; i <= 6; i++) 
-			{
-				this.hitRatioWriter = new StreamWriter(File.Create ("k" + k + "t" + i + hitRatioFile));
-				this.evalWriter = new StreamWriter(File.Create ("k" + k + "t" + i + evalFile));
 
-				this.run (k, i, trainSetPercentage);
-
-				this.hitRatioWriter.Close ();
-				this.evalWriter.Close ();
-			}
+			this.k = k;
 		}
 
-		void run (int k, int timePartitions, float trainSetPercentage)
+		public float run(int k, int timePartitions)
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("(Faulty) Time Aware WriteRight (" + timePartitions + " time partitions");
-
 			float hitRatio = 0.0f;
-			float evaluationScore = 0.0f;
+			float precission = 0.0f;
 
 			foreach (User user in dataSet.Users) 
 			{
-				var timeAwareWriteRight = new TimeAwareWriteRight(k, timePartitions);
-				timeAwareWriteRight.LoadDB ("dummy");
-
+				var writeRight = new TimeAwareWriteRight (timePartitions);
 				var evaluation = new ExperimentEvaluation ();
 
 				/* Train the engine */
 
-				User trainSet = user.GetTrainSet (trainSetPercentage);
+				User trainSet = user.GetTopKTweetsTrainSet (k);
 
 				while (trainSet.HasNext ()) 
 				{
-					var ch = trainSet.ConsumeNext ();	
-					timeAwareWriteRight.SetTime (this.random.Next () % 24);
-					timeAwareWriteRight.CharacterTyped (ch);
+					var ch = trainSet.ConsumeNext ();
+					writeRight.SetTime (this.getRandomTime ());
+					writeRight.CharacterTyped (ch);
 				}
+
+				writeRight.CharacterTyped (' ');
 
 				User testSet = user.GetTestSet ();
 
 				var totalChars = 0;
 				var guessedChars = 0;
 
+				writeRight.InTestMode ();
+
 				while (testSet.HasNext ()) 
 				{
 					var ch = testSet.ConsumeNext ();
-					timeAwareWriteRight.SetTime (testSet.GetTime ());
-					timeAwareWriteRight.CharacterTyped (ch);
+					writeRight.SetTime (testSet.GetTime ());
+					writeRight.CharacterTyped (ch);
 
 					var next = testSet.PeekNext ();
-					timeAwareWriteRight.SetTime (this.random.Next () % 24);
-					var predictions = timeAwareWriteRight.GetTopKPredictions ();
+					writeRight.SetTime (testSet.GetTime ());
+					var predictions = writeRight.GetTopKPredictions ();
 
-					if (timeAwareWriteRight.IsValidCharacter (next) == false || 
-						timeAwareWriteRight.IsWordSeparator (next) || 
-						timeAwareWriteRight.IsIdle ()) 
+					if (writeRight.IsValidCharacter (next) == false || 
+						writeRight.IsWordSeparator (next)) 
 					{
 						continue;
 					}
 
-					if (predictions.ContainsKey (next) == false)
+					if (predictions == null || predictions.ContainsKey (next) == false)
 					{
-						timeAwareWriteRight.BadPrediction ();
+						writeRight.BadPrediction ();
 						totalChars++;
 
 						evaluation.Miss ();
 					} 
-					else if (timeAwareWriteRight.IsWordSeparator (next) == false) 
+					else if (writeRight.IsWordSeparator (next) == false) 
 					{
 						guessedChars++;
 						totalChars++;
@@ -98,18 +84,21 @@ namespace Di.Kdd.Experiments
 				}
 
 				hitRatio += (float)guessedChars / (float)totalChars;
-				evaluationScore += evaluation.GetScore ();
-
-				Console.WriteLine(user.GetId ());
+				precission += evaluation.GetPrecission ();
 			}
-
+			/*
 			this.hitRatioWriter.WriteLine (hitRatio / dataSet.Users.Count);
 			this.evalWriter.WriteLine (evaluationScore / dataSet.Users.Count);
 
 			this.hitRatioWriter.Flush ();
 			this.evalWriter.Flush ();
+*/
+			return (float) precission / dataSet.Users.Count;
+		}
 
-			dataSet.Reset ();
+		private int getRandomTime()
+		{
+			return this.random.Next () % 25;
 		}
 	}
 }

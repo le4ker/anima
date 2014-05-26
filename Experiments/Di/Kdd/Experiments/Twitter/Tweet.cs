@@ -1,8 +1,11 @@
-﻿namespace Di.Kdd.Experiments.Twitter
+﻿using System;
+using System.Globalization;
+
+namespace Di.Kdd.Experiments.Twitter
 {
 	using System;
 
-	public class Tweet
+	public class Tweet : IComparable
 	{
 		private const int 	ID_INDEX = 0;
 		private const int 	USERNAME_INDEX = 1;
@@ -14,16 +17,24 @@
 		private int time;
 		private Location location;
 		string tweet;
+		private DateTime dateTime;
+
+		private string fromString;
 
 		private int tweetIndex = 0;
 
 		public Tweet(string fromString)
 		{
+			this.fromString = fromString;
+
 			string[] tokens = fromString.Split ('|');
 
 			string noisedTime = tokens[Tweet.DATETIME_INDEX].Split(':')[0];
 			string hour = new String (noisedTime.ToCharArray(), noisedTime.Length - 2, 2);
 			this.time = Int32.Parse (hour);
+
+			//Sat Mar 08 05:30:03 +0000 2014
+			this.dateTime = DateTime.ParseExact (tokens[Tweet.DATETIME_INDEX], "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
 
 			this.location = new Location (new Coordinate (tokens [Tweet.LONG_INDEX]), new Coordinate (tokens [Tweet.LAT_INDEX]));
 
@@ -87,6 +98,23 @@
 		public int GetTime()
 		{
 			return this.time;
+		}
+
+		#region IComparable implementation
+
+		public int CompareTo (object obj)
+		{
+			Tweet a = this;
+			Tweet b = (Tweet) obj;
+
+			return a.dateTime.CompareTo (b.dateTime);
+		}
+
+		#endregion
+
+		public override string ToString ()
+		{
+			return this.fromString;
 		}
 	}
 }

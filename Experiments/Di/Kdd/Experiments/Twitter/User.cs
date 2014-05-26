@@ -1,4 +1,6 @@
-﻿namespace Di.Kdd.Experiments.Twitter
+﻿using System.Runtime.InteropServices;
+
+namespace Di.Kdd.Experiments.Twitter
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,6 +12,7 @@
 		private List<Tweet> tweets = new List<Tweet>();
 
 		private int tweetIndex = 0;
+		private int TEST_SET_SIZE = 500; // TODO: review
 
 		public User() { }
 
@@ -33,36 +36,37 @@
 			}
 		}
 
+
 		private int testSetIndex;
 
-		public User GetTrainSet(float percentage)
+		public User GetTopKTweetsTrainSet(int k) 
 		{
 			User trainSet = new User ();
 
 			int i;
 
-			for (i = 0; i < this.tweets.Count * percentage; i++) 
+			for (i = 0; i < k; i++) 
 			{
 				trainSet.AddTweet (this.tweets[i]);
 			}
 
 			this.testSetIndex = i;
 
-			return trainSet;
+			return trainSet;		
 		}
 
 		public User GetTestSet()
 		{
 			User testSet = new User ();
 
-			for (int i = this.testSetIndex; i < this.tweets.Count; i++) 
+			for (int i = this.testSetIndex; i < testSetIndex + this.TEST_SET_SIZE; i++) 
 			{
 				testSet.AddTweet (this.tweets[i]);
 			}
 
 			return testSet;
 		}
-
+			
 		private void AddTweet(Tweet tweet)
 		{
 			this.tweets.Add (tweet);
@@ -153,6 +157,28 @@
 		public int GetTime()
 		{
 			return this.tweets [this.tweetIndex].GetTime ();
+		}
+
+		public void Sort()
+		{
+			this.tweets.Sort ();
+		}
+
+		public void Purge()
+		{
+			File.Delete (this.id);
+		}
+
+		public void Save()
+		{
+			TextWriter writer = new StreamWriter (File.Create (this.id));
+
+			foreach (var tweet in this.tweets)
+			{
+				writer.WriteLine (tweet.ToString ());
+			}
+
+			writer.Close ();
 		}
 	}
 }

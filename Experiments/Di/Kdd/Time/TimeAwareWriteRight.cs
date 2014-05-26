@@ -1,4 +1,6 @@
-﻿namespace Di.Kdd.WriteRightSimulator
+﻿using System.Threading;
+
+namespace Di.Kdd.WriteRightSimulator
 {
 	using Di.Kdd.WriteRightSimulator;
 
@@ -6,6 +8,11 @@
 
 	public class TimeAwareWriteRight : WriteRight
 	{
+		public TimeAwareWriteRight(int timePartitions) 
+		{
+			this.engine = new TimeAwarePredictionEngine (timePartitions);
+		}
+
 		public TimeAwareWriteRight (int k, int timePartitions) : base(k)
 		{
 			this.engine = new TimeAwarePredictionEngine (timePartitions);

@@ -5,22 +5,22 @@
 	public class ExperimentEvaluation
 	{
 		private float score;
-		private int hits, misses;
+		private int total = 0;
 
 		public void Hit(int predictionSetSize)
 		{
 			this.score += (float) 1 / predictionSetSize;
-			this.hits++;
+			this.total++;
 		}
 
 		public void Miss()
 		{
-			this.misses++;
+			this.total++;
 		}
 
-		public float GetScore()
+		public float GetPrecission()
 		{
-			return this.score / (this.hits + this.misses);
+			return (float) this.score / this.total;
 		}
 	}
 }

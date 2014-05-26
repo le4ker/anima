@@ -11,7 +11,7 @@ namespace Di.Kdd.WriteRightSimulator
 		private int currentHour = 0;
 
 		private int timePartitions;
-		private Trie []timeTries = new Trie[] {new Trie(), new Trie(), new Trie(), new Trie(), new Trie(), new Trie() };
+		private Trie []timeTries = new Trie[] {new Trie(), new Trie(), new Trie(), new Trie(), new Trie(), new Trie(), new Trie() };
 
 		public TimeAwarePredictionEngine(int timePartitions)
 		{

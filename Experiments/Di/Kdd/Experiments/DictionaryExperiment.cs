@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Configuration;
+using System.Globalization;
 
 namespace Di.Kdd.Experiments
 {
@@ -10,43 +10,32 @@ namespace Di.Kdd.Experiments
 
 	public class DictionaryExperiment
 	{
-		private  string hitRatioFile = "dic_hitratio.txt";
-		private  string evalFile = "dic_eval.txt";
+		int k;
 
-		private  TextWriter hitRatioWriter;
-		private  TextWriter evalWriter;
-
-		public DictionaryExperiment (int k, float trainSetPercentage)
+		public DictionaryExperiment (int k)
 		{
-			this.hitRatioWriter = new StreamWriter(File.Create ("k" + k + hitRatioFile));
-			this.evalWriter = new StreamWriter(File.Create ("k" + k + evalFile));
 
-			this.run (k, trainSetPercentage);
-
-			this.hitRatioWriter.Close ();
-			this.evalWriter.Close ();
+			this.k = k;
 		}
-			
-		public void run(int k, float trainSetPercentage)
+
+		public float run(int k)
 		{
 			var dataSet = new DataSet ();
 
-			Console.WriteLine ("WriteRight with Dictionary");
-
 			float hitRatio = 0.0f;
-			float evaluationScore = 0.0f;
+			float precission = 0.0f;
 
 			foreach (User user in dataSet.Users) 
 			{
-				var writeRight = new WriteRight(k);
-				writeRight.DontPersonalize ();
-				writeRight.LoadDB ("dummy");
-
+				var writeRight = new WriteRight();
 				var evaluation = new ExperimentEvaluation ();
+				writeRight.DontPersonalize ();
+				writeRight.LoadDB ("../../Data/");
+				writeRight.InTestMode ();
 
 				/* Train the engine */
 
-				User trainSet = user.GetTrainSet (trainSetPercentage);
+				User trainSet = user.GetTopKTweetsTrainSet (k);
 
 				while (trainSet.HasNext ()) 
 				{
@@ -54,10 +43,14 @@ namespace Di.Kdd.Experiments
 					writeRight.CharacterTyped (ch);
 				}
 
+				writeRight.CharacterTyped (' ');
+
 				User testSet = user.GetTestSet ();
 
 				var totalChars = 0;
 				var guessedChars = 0;
+
+				writeRight.InTestMode ();
 
 				while (testSet.HasNext ()) 
 				{
@@ -68,13 +61,12 @@ namespace Di.Kdd.Experiments
 					var predictions = writeRight.GetTopKPredictions ();
 
 					if (writeRight.IsValidCharacter (next) == false || 
-						writeRight.IsWordSeparator (next) || 
-						writeRight.IsIdle ()) 
+						writeRight.IsWordSeparator (next)) 
 					{
 						continue;
 					}
 
-					if (predictions.ContainsKey (next) == false)
+					if (predictions == null || predictions.ContainsKey (next) == false)
 					{
 						writeRight.BadPrediction ();
 						totalChars++;
@@ -91,18 +83,16 @@ namespace Di.Kdd.Experiments
 				}
 
 				hitRatio += (float)guessedChars / (float)totalChars;
-				evaluationScore += evaluation.GetScore ();
-
-				Console.WriteLine(user.GetId ());
+				precission += evaluation.GetPrecission ();
 			}
-
+			/*
 			this.hitRatioWriter.WriteLine (hitRatio / dataSet.Users.Count);
 			this.evalWriter.WriteLine (evaluationScore / dataSet.Users.Count);
 
 			this.hitRatioWriter.Flush ();
 			this.evalWriter.Flush ();
-
-			dataSet.Reset ();
+*/
+			return (float) precission / dataSet.Users.Count;
 		}
 	}
 }

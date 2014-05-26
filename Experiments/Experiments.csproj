@@ -45,11 +45,12 @@
     <Compile Include="Di\Kdd\Experiments\Twitter\Coordinate.cs" />
     <Compile Include="Di\Kdd\Experiments\TimeAwareExperiment.cs" />
     <Compile Include="Di\Kdd\Experiments\DictionaryExperiment.cs" />
-    <Compile Include="Di\Kdd\Experiments\DictionaryWithPersonalization.cs" />
     <Compile Include="Di\Kdd\Time\TimeAwareWriteRight.cs" />
     <Compile Include="Di\Kdd\Time\TimeAwarePredictionEngine.cs" />
     <Compile Include="Di\Kdd\Experiments\ExperimentEvaluation.cs" />
     <Compile Include="Di\Kdd\Experiments\FaultyTimeExperiment.cs" />
+    <Compile Include="Di\Kdd\Experiments\Personalization.cs" />
+    <Compile Include="Di\Kdd\Experiments\Twitter\SortDatasetOnTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

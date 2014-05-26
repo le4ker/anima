@@ -10,11 +10,13 @@ namespace Di.Kdd.WriteRightSimulator
 
 	public class WriteRight
 	{
-		private int k = 26;
+		private int k = WriteRight.K_UPPER_BOUND;
 		private int continuousSuccesses = 0;
 		private bool isIdle = false;
 
 		private int aggresiveThreshold = 1;
+
+		private static int K_UPPER_BOUND = 26;
 
 		protected TrimmablePredictionEngine engine = new TrimmablePredictionEngine();
 
@@ -100,15 +102,15 @@ namespace Di.Kdd.WriteRightSimulator
 		}
 
 		public Dictionary<char, float> GetTopKPredictions ()
-		{																														// TODO
+		{																														
 			return this.isIdle ? null : this.engine.GetPredictions().Where(x => x.Value > 0.0F).OrderByDescending(x => x.Value).Take(this.k).ToDictionary(x => x.Key, x => x.Value);
 		}
 
 		public void BadPrediction ()
 		{
-			if (this.k < 26)
+			if (this.k < WriteRight.K_UPPER_BOUND)
 			{
-				//				this.k++;
+				this.k++;
 			}
 
 			this.continuousSuccesses = 0;
@@ -188,12 +190,17 @@ namespace Di.Kdd.WriteRightSimulator
 
 				if (k > 1)
 				{
-					//					k--;
+					this.k--;
 				}
 			}
 		}
 
 		#endregion
+
+		public void InTestMode()
+		{
+			this.engine.testMode ();
+		}
 	}
 }
 
