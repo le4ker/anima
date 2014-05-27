@@ -62,6 +62,11 @@ namespace Di.Kdd.WriteRightSimulator
 
 		#region Public Methods
 
+		public int GetKnowledgeSize()
+		{
+			return this.engine.GetKnowledgeSize ();
+		}
+
 		public bool IsUnknownWord()
 		{
 			return this.engine.IsUnknownWord();

@@ -10,15 +10,7 @@ namespace Di.Kdd.Experiments
 
 	public class TimeAwareExperiment
 	{
-		int k;
-
-		public TimeAwareExperiment (int k)
-		{
-
-			this.k = k;
-		}
-
-		public float run(int k, int timePartitions)
+		public static float run(int k, int timePartitions)
 		{
 			var dataSet = new DataSet ();
 

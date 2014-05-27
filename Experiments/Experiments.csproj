@@ -51,6 +51,8 @@
     <Compile Include="Di\Kdd\Experiments\FaultyTimeExperiment.cs" />
     <Compile Include="Di\Kdd\Experiments\Personalization.cs" />
     <Compile Include="Di\Kdd\Experiments\Twitter\SortDatasetOnTime.cs" />
+    <Compile Include="Di\Kdd\Experiments\UserPersonalizationExp.cs" />
+    <Compile Include="Di\Kdd\Experiments\UserTimePerExp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

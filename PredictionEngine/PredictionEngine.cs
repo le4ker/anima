@@ -9,7 +9,7 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 10000;
+		private int wordsSize = 1000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
@@ -67,6 +67,11 @@ namespace Di.Kdd.TextPrediction
 			this.trie.WasTyped (newWord);
 		}
 			
+		public int GetKnowledgeSize()
+		{
+			return this.knowledge.Count;
+		}
+
 		#region Public Methods
 
 		public void testMode()

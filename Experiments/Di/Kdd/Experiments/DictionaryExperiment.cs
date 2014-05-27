@@ -10,15 +10,7 @@ namespace Di.Kdd.Experiments
 
 	public class DictionaryExperiment
 	{
-		int k;
-
-		public DictionaryExperiment (int k)
-		{
-
-			this.k = k;
-		}
-
-		public float run(int k)
+		public static float run(int k)
 		{
 			var dataSet = new DataSet ();
 
