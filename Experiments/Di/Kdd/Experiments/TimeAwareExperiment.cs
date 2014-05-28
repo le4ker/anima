@@ -48,7 +48,7 @@ namespace Di.Kdd.Experiments
 					writeRight.SetTime (testSet.GetTime ());
 					writeRight.CharacterTyped (ch);
 
-					var next = testSet.PeekNext ();
+					var next = Char.ToLower (testSet.PeekNext ());
 					writeRight.SetTime (testSet.GetTime ());
 					var predictions = writeRight.GetTopKPredictions ();
 

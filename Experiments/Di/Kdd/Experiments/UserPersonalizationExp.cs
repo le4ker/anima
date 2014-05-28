@@ -38,7 +38,7 @@ namespace Di.Kdd.Experiments
 				var ch = testSet.ConsumeNext ();
 				writeRight.CharacterTyped (ch);
 
-				var next = testSet.PeekNext ();
+				var next = Char.ToLower (testSet.PeekNext ());
 				var predictions = writeRight.GetTopKPredictions ();
 
 				if (writeRight.IsValidCharacter (next) == false || 
