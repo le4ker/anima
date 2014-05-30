@@ -15,7 +15,10 @@ namespace Di.Kdd.Experiments
 
 		public static void Main (string[] args)
 		{
-			pervstime ();
+			memper ();
+			dic ();
+			per ();
+			time ();
 		}
 
 		private static void pervstime()
