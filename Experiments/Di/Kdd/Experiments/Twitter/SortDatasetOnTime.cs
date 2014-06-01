@@ -8,7 +8,7 @@ namespace Experiments
 	{
 		public static void Maina (string[] args)
 		{
-			DataSet d = new DataSet (true);		
+			DataSet.GetInstance(true);		
 		}
 	}
 }

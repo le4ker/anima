@@ -9,7 +9,7 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 1000;
+		private int wordsSize = 100000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
@@ -216,12 +216,9 @@ namespace Di.Kdd.TextPrediction
 
 		private void Init ()
 		{
-			var reader = File.OpenText(DataFolder + WordsFileName);
+			Dictionary dic = Dictionary.GetInstance (this.wordsSize);
 
-			var words = 0;
-			var word = "";
-
-			while (words < wordsSize && (word = reader.ReadLine()) != null)
+			foreach(var word in dic.Words ())
 			{
 				if (this.knowledge.ContainsKey(word) || Trie.IsValidWord(word) == false)
 				{
@@ -230,10 +227,7 @@ namespace Di.Kdd.TextPrediction
 
 				this.knowledge.Add(word, new StatisticsT());
 				this.LearnNewWord(word);
-				words++;
 			}
-
-			reader.Close();
 		}
 
 		private void ResetState ()

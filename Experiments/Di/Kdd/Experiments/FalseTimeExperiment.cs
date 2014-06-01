@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Globalization;
+using System.Threading;
 
 namespace Di.Kdd.Experiments
 {
@@ -8,8 +9,10 @@ namespace Di.Kdd.Experiments
 
 	using System;
 
-	public class TimeAwareExperiment
+	public class FalseTimeExperiment
 	{
+		private static Random r = new Random();
+
 		public static float run(int k, int timePartitions)
 		{
 			var dataSet = DataSet.GetInstance ();
@@ -29,7 +32,7 @@ namespace Di.Kdd.Experiments
 				while (trainSet.HasNext ()) 
 				{
 					var ch = trainSet.ConsumeNext ();
-					writeRight.SetTime (trainSet.GetTime ());
+					writeRight.SetTime (FalseTimeExperiment.r.Next () % 25);
 					writeRight.CharacterTyped (ch);
 				}
 

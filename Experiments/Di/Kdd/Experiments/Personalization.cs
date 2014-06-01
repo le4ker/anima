@@ -14,7 +14,7 @@ namespace Di.Kdd.Experiments
 
 		public static float run(int k)
 		{
-			var dataSet = new DataSet ();
+			var dataSet = DataSet.GetInstance ();
 
 			float hitRatio = 0.0f;
 			float precission = 0.0f;
@@ -42,6 +42,7 @@ namespace Di.Kdd.Experiments
 				var totalChars = 0;
 				var guessedChars = 0;
 
+				writeRight.Trim ();
 				writeRight.InTestMode ();
 
 				while (testSet.HasNext ()) 
@@ -72,6 +73,8 @@ namespace Di.Kdd.Experiments
 
 						evaluation.Hit (predictions.Count);
 					}
+
+					writeRight.Trim ();
 				}
 
 				hitRatio += (float)guessedChars / (float)totalChars;

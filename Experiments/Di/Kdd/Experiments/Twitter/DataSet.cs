@@ -8,11 +8,24 @@ namespace Di.Kdd.Experiments.Twitter
 
 	public class DataSet
 	{
+		private static DataSet dataset;
+
 		private const string DataFolder = "../../Data/";
 
 		public List<User> Users = new List<User>();
 
-		public DataSet (bool sort = false)
+		public static DataSet GetInstance(bool sort = false) 
+		{
+			if (DataSet.dataset == null) {
+				DataSet.dataset = new DataSet (sort);
+			}
+
+			DataSet.dataset.Reset ();
+
+			return DataSet.dataset;
+		}
+
+		private DataSet (bool sort = false)
 		{
 			string[] userFiles = Directory.GetFiles (DataSet.DataFolder, "*.txt", SearchOption.TopDirectoryOnly);
 

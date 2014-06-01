@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Mono.C5" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="Trie.cs" />
     <Compile Include="PredictionEngine.cs" />
     <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="Dictionary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
