@@ -87,6 +87,11 @@ namespace Di.Kdd.WriteRightSimulator
 			return this.isIdle;
 		}
 
+		public void Trim()
+		{
+			this.engine.Trim ();
+		}
+
 		public void CharacterTyped (char character)
 		{
 			this.engine.CharacterTyped(character);

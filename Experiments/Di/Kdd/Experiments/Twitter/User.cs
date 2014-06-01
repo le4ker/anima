@@ -59,7 +59,7 @@ namespace Di.Kdd.Experiments.Twitter
 		{
 			User testSet = new User ();
 
-			for (int i = this.testSetIndex; i < testSetIndex + this.TEST_SET_SIZE; i++) 
+			for (int i = this.testSetIndex; i < this.tweets.Count && i < testSetIndex + this.TEST_SET_SIZE; i++) 
 			{
 				testSet.AddTweet (this.tweets[i]);
 			}
