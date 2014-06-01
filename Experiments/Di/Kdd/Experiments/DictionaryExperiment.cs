@@ -12,7 +12,7 @@ namespace Di.Kdd.Experiments
 	{
 		public static float run(int k)
 		{
-			var dataSet = new DataSet ();
+			var dataSet = DataSet.GetInstance ();
 
 			float hitRatio = 0.0f;
 			float precission = 0.0f;

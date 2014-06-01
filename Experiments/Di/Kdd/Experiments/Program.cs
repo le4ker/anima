@@ -15,15 +15,12 @@ namespace Di.Kdd.Experiments
 
 		public static void Main (string[] args)
 		{
-			memper ();
-			dic ();
 			per ();
-			time ();
 		}
 
 		private static void pervstime()
 		{
-			var dataset = new DataSet ();
+			var dataset = DataSet.GetInstance ();
 
 			foreach (var user in dataset.Users) 
 			{
@@ -36,6 +33,7 @@ namespace Di.Kdd.Experiments
 		}
 
 		private static void memper()
+
 		{
 			var results = new int[(K / 50) + 1];
 			var resultsWRiter = new StreamWriter (File.Create ("memper-precission.csv"));
@@ -55,7 +53,7 @@ namespace Di.Kdd.Experiments
 		private static void dic()
 		{
 			var results = new float[(K / 50) + 1];
-			var resultsWRiter = new StreamWriter (File.Create ("dic-precission.csv"));
+			var resultsWRiter = new StreamWriter (File.Create ("dic100-precission.csv"));
 
 			for (int k = 0, i = 0; k <= K; k += 50, i++) 
 			{
@@ -102,5 +100,25 @@ namespace Di.Kdd.Experiments
 				resultsWRiter.Close ();
 			}
 		}
+
+		private static void ftime()
+		{
+			for (int t = 2; t < MainClass.timePartitions; t++) 
+			{
+				var results = new float[(K / 50) + 1];
+				var resultsWRiter = new StreamWriter (File.Create ("ftime" + t + "-precission.csv"));
+
+				for (int k = 0, i = 0; k <= K; k += 50, i++) 
+				{
+					results[i] = FalseTimeExperiment.run (k, t);
+					resultsWRiter.WriteLine (results[i]);
+					Console.WriteLine (results[i]);
+					resultsWRiter.Flush ();
+				}
+
+				resultsWRiter.Close ();
+			}
+		}
+
 	}
 }
