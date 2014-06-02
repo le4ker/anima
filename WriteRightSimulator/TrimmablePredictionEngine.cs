@@ -10,7 +10,7 @@ namespace Di.Kdd.WriteRightSimulator
 	public class TrimmablePredictionEngine : TextPrediction.PredictionEngine<Statistics>
 	{
 		private int trimThreshold = 1500;
-		private float trimPercentage = 0.2F;
+		private float trimPercentage = 0.8F;
 
 		public void SetTrimThreshold (int trimThreshold)
 		{
@@ -33,6 +33,8 @@ namespace Di.Kdd.WriteRightSimulator
 				Logger.Log("Trimming knowledge, from " + this.knowledge.Count + " to " + this.trimPercentage * this.knowledge.Count);
 
 				this.knowledge = this.knowledge.OrderByDescending(x => x.Value.GetTimestamp()).Take((int) (this.trimPercentage * this.knowledge.Count)).ToDictionary(x => x.Key, x=> x.Value);			
+
+				this.GetTrained ();
 			}
 		}
 

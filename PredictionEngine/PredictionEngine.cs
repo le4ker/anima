@@ -237,13 +237,18 @@ namespace Di.Kdd.TextPrediction
 			this.isUnknownWord = false;
 		}
 
-		private void GetTrained ()
+		protected void GetTrained ()
 		{
 			foreach (var data in this.knowledge)
 			{
 				this.GetTrie().WasTyped(data.Key, data.Value.GetPopularity());
 				this.wordsTyped += data.Value.GetPopularity();
 			}
+		}
+
+		protected virtual  void DeleteTries()
+		{
+			this.trie = new Trie();
 		}
 
 		private void WordTyped ()

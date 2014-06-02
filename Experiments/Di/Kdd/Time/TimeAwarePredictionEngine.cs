@@ -1,6 +1,7 @@
 ﻿using Di.Kdd.TextPrediction;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Di.Kdd.WriteRightSimulator
 {
@@ -34,6 +35,14 @@ namespace Di.Kdd.WriteRightSimulator
 			foreach (Trie trie in this.timeTries) 
 			{
 				trie.WasTyped (newWord);
+			}
+		}
+
+		protected override void DeleteTries()
+		{
+			for (int i = 0; i < this.timeTries.Length; i++) 
+			{
+				this.timeTries [i] = new Trie ();
 			}
 		}
 	}
