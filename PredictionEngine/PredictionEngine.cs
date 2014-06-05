@@ -9,13 +9,13 @@ namespace Di.Kdd.TextPrediction
 
 	public class PredictionEngine<StatisticsT> where StatisticsT : Statistics, new()
 	{
-		private int wordsSize = 100000;
+		private int wordsSize = 6000;
 
 		private Trie trie = new Trie();
 		protected Dictionary<string, StatisticsT> knowledge = new Dictionary<string, StatisticsT>();
 
 		private string currentWord = "";
-		private int wordsTyped = 0;
+		protected int wordsTyped = 0;
 		private Trie currentSubTrie;
 		private bool isUnknownWord = false;
 

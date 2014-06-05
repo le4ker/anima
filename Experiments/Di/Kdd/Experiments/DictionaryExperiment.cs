@@ -10,20 +10,21 @@ namespace Di.Kdd.Experiments
 
 	public class DictionaryExperiment
 	{
+		public static int memory;
+
 		public static float run(int k)
 		{
 			var dataSet = DataSet.GetInstance ();
 
 			float hitRatio = 0.0f;
 			float precission = 0.0f;
+			memory = 0;
 
 			foreach (User user in dataSet.Users) 
 			{
 				var writeRight = new WriteRight();
 				var evaluation = new ExperimentEvaluation ();
-				writeRight.DontPersonalize ();
-				writeRight.LoadDB ("../../Data/");
-				writeRight.InTestMode ();
+				writeRight.LoadDB ("");
 
 				/* Train the engine */
 
@@ -76,6 +77,7 @@ namespace Di.Kdd.Experiments
 
 				hitRatio += (float)guessedChars / (float)totalChars;
 				precission += evaluation.GetPrecission ();
+				memory += writeRight.GetKnowledgeSize ();
 			}
 			/*
 			this.hitRatioWriter.WriteLine (hitRatio / dataSet.Users.Count);
@@ -84,6 +86,9 @@ namespace Di.Kdd.Experiments
 			this.hitRatioWriter.Flush ();
 			this.evalWriter.Flush ();
 */
+
+			memory = memory / dataSet.Users.Count;
+
 			return (float) precission / dataSet.Users.Count;
 		}
 	}

@@ -34,6 +34,8 @@ namespace Di.Kdd.WriteRightSimulator
 
 				this.knowledge = this.knowledge.OrderByDescending(x => x.Value.GetTimestamp()).Take((int) (this.trimPercentage * this.knowledge.Count)).ToDictionary(x => x.Key, x=> x.Value);			
 
+				this.wordsTyped = 0;
+				this.DeleteTries ();
 				this.GetTrained ();
 			}
 		}
